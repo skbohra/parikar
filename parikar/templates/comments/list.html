@@ -1,0 +1,23 @@
+{%load static%}
+{%load comments%}
+
+
+{% get_comment_list for parik as comment_list %}
+{% for comment in comment_list %}
+
+<div class="old-comment">
+                            <img src="{%static "images/Jack.png"%}">
+                        <div>
+				<h3>{{comment.user}} <span>2 days ago</span></h3>
+				<p>{{comment.comment}}</p>
+                            <div class="comment-action">
+                                    <img src="{%static "images/like.png"%}">
+                                <span>244k</span>
+                                <img src="{%static "images/dislike.png"%}">
+                                <span>2</span>
+                                <span>REPLY</span>
+                                <a href="">All replies</a>
+                            </div>
+                        </div>
+                    </div>
+{%endfor%}

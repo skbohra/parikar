@@ -1,0 +1,174 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATE NEW - Parikar</title>
+   
+    <script
+			  src="https://code.jquery.com/jquery-3.7.1.min.js"
+			  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+			  crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/EaselPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/PixiPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+ <link rel="stylesheet" href="{%static "jquery-ui.css"%}">
+  <link rel="stylesheet" href="{%static "jquery-ui.theme.css"%}">
+
+ 
+
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <!-- RoughEase, ExpoScaleEase and SlowMo are all included in the EasePack file -->    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/EasePack.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CustomEase.min.js"></script>
+
+<link rel="stylesheet" href="{%static "style.css"%}">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:800" rel="stylesheet">
+<style>
+form {
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+}
+
+h1 {
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+form input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  width: 100%;
+  background-color: #e8eeef;
+  color: #8a97a0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+  margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+}
+
+button {
+  padding: 19px 39px 18px 39px;
+  color: #FFF;
+
+  background-color: #012f61;
+  font-size: 18px;
+  text-align: center;
+  font-style: normal;
+  border-radius: 5px;
+  border: 1px solid #012f60;
+  border-width: 1px 1px 3px;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+  margin-bottom: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+legend {
+  font-size: 1.4em;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+label.light {
+  font-weight: 300;
+  display: inline;
+}
+#id_tags{
+width:20%;
+height:44px;
+}
+</style>
+</head>
+<body>
+    <nav class="flex-div">
+        <div class="nav-left flex-div">
+		<img src="{%static "images/menu.png"%}" class="menu-icon">
+		<a href="/"><img src="{%static "images/parikar.png"%}" class="logo"></a>
+        </div>
+        <div class="nav-middle flex-div">
+            <div class="search-box flex-div">
+                <input type="text" placeholder="Search">
+		<img src="{%static "images/search.png"%}" >
+            </div>
+		<img src="{%static "images/voice-search.png"%}" class="mic-icon">
+        </div>
+        <div class="nav-right flex-div">
+		<img src="{%static "images/notification.png"%}" >
+		<img src="{%static "images/Jack.png"%}" class="user-icon">
+        </div>
+    </nav>
+    <!-- end nav -->
+    <div class="container play-container">
+        <div class="row">
+            <div class="play-video">
+		    <form method="POST" action ="" enctype="multipart/form-data">{%csrf_token%}
+			    {{form.as_div}}
+			    <button type="submit">Post</button>
+		    </form>
+		          </div>
+            <div class="right-sidebar">
+		    {%for parik in pariks%}
+	     	    <div class="side-video-list">
+			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
+                    <div class="vid-info">
+			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    <p>{{parik.user.username}}</p>
+                        <p>15k Views</p>
+                    </div>
+                </div>
+		{%endfor%}
+                     </div>
+
+
+        </div>
+    </div>
+    <script src="{%static "script.js"%}"></script>
+</body>
+</html>

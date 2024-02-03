@@ -1,0 +1,5 @@
+{%load voting_tags%}
+<form action="" method="POST">{%csrf_token%}
+	{% confirm_vote_message parik direction %}
+	<button type="submit">Submit</button>
+</form>
