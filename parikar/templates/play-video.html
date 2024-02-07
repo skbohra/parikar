@@ -13,6 +13,16 @@
 			  src="https://code.jquery.com/jquery-3.7.1.min.js"
 			  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 			  crossorigin="anonymous"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css"
+/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bangers&family=Dancing+Script:wght@400..700&family=Homemade+Apple&family=Honk&family=Leckerli+One&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Maps&family=Short+Stack&display=swap" rel="stylesheet">
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
@@ -26,7 +36,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/PixiPlugin.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
 
- <link rel="stylesheet" href="{%static "jquery-ui.css"%}">
+<script src="{%static "node_modules/gsap-trial/dist/SplitText.js"%}" type="text/javascript"></script>
+<script src="{%static "node_modules/gsap-trial/dist/Physics2DPlugin.js"%}" type="text/javascript"></script>
+<script src="{%static "node_modules/gsap-trial/dist/ScrambleTextPlugin.js"%}" type="text/javascript"></script>
+
+
+<link rel="stylesheet" href="{%static "jquery-ui.css"%}">
   <link rel="stylesheet" href="{%static "jquery-ui.theme.css"%}">
 
  
@@ -38,7 +53,7 @@
 
 <link rel="stylesheet" href="{%static "style.css"%}">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:800" rel="stylesheet">
-    <script src="{%static "notify.js"%}" type="text/javascript"></script>
+<script src="{%static "notify.js"%}" type="text/javascript"></script>
     <script src="{%static "jquery.form.min.js"%}" type="text/javascript"></script>
     <script src="{%static "parikar.js"%}" type="text/javascript"></script>
 <style>
@@ -53,14 +68,11 @@ display:none;
 		<img src="{%static "images/menu.png"%}" class="menu-icon">
 		<a href="/"><img src="{%static "images/parikar.png"%}" class="logo"></a>
         </div>
-        <div class="nav-middle flex-div">
-            <div class="search-box flex-div">
-                <input type="text" placeholder="Search">
-		<img src="{%static "images/search.png"%}" >
-            </div>
-		<img src="{%static "images/voice-search.png"%}" class="mic-icon">
-        </div>
-        <div class="nav-right flex-div">
+	{%include 'search_box.html'%}
+
+
+
+	<div class="nav-right flex-div">
 		<a href="/new/" class="create-button">CREATE</a>
 		<img src="{%static "images/notification.png"%}" >
 		<img src="{%static "images/Jack.png"%}" class="user-icon">
@@ -76,7 +88,7 @@ display:none;
 			    
 			    {%for line in lines%}
 			    <div class="line">
-				    <span style="font-family:{{parik.font}}; font-size:{{parik.font_size}}px; color:{{parik.color}}; font-weight:{{parik.font_weight}}" > {{line}}
+				    <span style="font-family:{{line.font}}; font-size:{{parik.font_size}}px; color:{{line.color}}; font-weight:{{parik.font_weight}}" > {{line.line}}
 </span>
 </div>
 {%endfor%}
@@ -85,7 +97,7 @@ display:none;
                 </div>
 		<div class="video-controls-box">
 		<ul class="video-control-list">
-			<li class="video-control-item"><a href="#" id="play-pause-button" class="video-control-pause" data-state="play">Pause</a></li>
+			<li class="video-control-item"><i class='iconoir-pause play-pause-icon'></i><a href="#" id="play-pause-button" class="video-control-pause" data-state="play"> Pause</a></li>
 
 		</ul>
 		<div id="ctrl_slider"></div>
@@ -100,7 +112,7 @@ display:none;
 		<h3>{{parik.title}} </h3>
 		
                 <div class="play-video-info">
-			<p>1234 Views &bull; 0 minutes ago</p>
+			<p>1234 Views &bull; {{parik.created_on|timesince}} ago</p>
                     <div> 
 			    <a href=""><img src="/static/images/like.png">0</a>
 			    <a href=""><img src="/static/images/dislike.png">1</a>
@@ -112,10 +124,10 @@ display:none;
                 <div class="publisher">
 			<img src="/static/images/Jack.png">
                     <div>
-			    <p>{{parik.user.username|title}}</p>
-                        <span>500k Subscribers</span>
+			    <p><a href="{%url 'channel' parik.user.channel.id %}">{{parik.user.channel.channel_name|title}}</a></p>
+			    <span>{{parik.user.channel.subscribers}} Subscribers</span>
                     </div>
-                    <button type="button">Subscribe</button>
+		    <button type="button" {%if is_subscribed%} class="btn-disabled subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}"  {%else%} class="subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}" {%endif%}>{%if is_subscribed%} Subscribed {%else%} Subscribe {%endif%} </button>
                 </div>
                 <div class="vid-description">
                     <hr>
@@ -154,7 +166,7 @@ display:none;
     <script src="{%static "script.js"%}"></script>
     <script>
 	$(function(){
-			    animation("{{parik.animation_type}}");
+			    animation("{{parik.animation.name}}");
 	
  $('#comment-form').ajaxForm(function() { 
 	$("#id_comment").notify("Comment posted!","success");

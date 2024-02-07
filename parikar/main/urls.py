@@ -14,8 +14,10 @@ widget_kwargs = {
 urlpatterns = [
     path("", views.index, name="index"),
     path("play/<int:id>/", views.single_video, name="single_video"),
+    path("channel/<int:id>/", views.channel_view, name="channel"),
     path("new/", views.add_parik, name="add_parik"),
     path("search/", views.search, name="search"),
+    path("subscribe/<int:id>/", views.subscribe_channel, name="subscribe_channel"),
     re_path(
         r"^pariks/(?P<object_id>\d+)/(?P<direction>up|down|clear)vote/?$",
         vote_on_object,

@@ -2,6 +2,7 @@
 
 function animation(parik){
 gsap.registerPlugin(MotionPathPlugin, EasePack);
+gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
 
 var line = $('.line');
 
@@ -40,9 +41,30 @@ tl
 		2 ), 1.3)
 } 
 
-if (parik == "why"){
+if (parik == "horizontal"){
 
-	whyGSAP(tl,line);
+tl
+	.add ( TweenMax.staggerFromTo (
+		line, time,
+			{
+				opacity: 0,
+				x:-y,
+			},
+			{	
+				opacity: 1,
+				y: 0,
+			},
+		2 ))
+	.add ( TweenMax.staggerTo (
+		line, time,
+			{
+				delay: time,
+				opacity: 0,
+				x: y,
+			},
+		2 ), 1.3)
+
+
 }
 
 var slider = $("#ctrl_slider");
@@ -72,32 +94,56 @@ tl.eventCallback("onComplete", function() {
   //replayReveal();
 });
 
-$(".video-control-pause").click(function(){
+$(".video-control-pause").click(function(e){
+e.preventDefault();
 var state = $(this).data("state");
 if (state == "play"){
 	//pauses wherever the playhead currently is:
 	tl.pause();
 	$(this).data("state","pause");
 	$(this).text("Play");
+	$('.play-pause-icon').toggleClass("iconoir-pause");
+	$('.play-pause-icon').toggleClass("iconoir-play");
 } else{
 	tl.play();
 	$(this).data("state","play");
 	$(this).text("Pause");
+	$('.play-pause-icon').toggleClass("iconoir-pause");
+	$('.play-pause-icon').toggleClass("iconoir-play");
 
 	}
 });
 
-function whyGSAP(tl,text) {
-      var split = new SplitText(".line", {type:"chars,words"}),
-      chars = split.chars,
-      centerIndex = Math.floor(chars.length / 2),
-      i;
-  for (i = 0; i < chars.length; i++) {
-    tl.from(chars[i], {x:(i - centerIndex) * 40, opacity:0, duration: 1.8, ease: "power2"}, i * 0.1);
-  }
-  tl.fromTo(text, {z:500, y:74, visibility:"visible"}, {z:-1000, ease:"slow(0.1, 0.9)", duration: 4}, 0);
-  tl.to(text, {rotationX:-720, autoAlpha:0, scale:0.3, duration: 1.5, ease:"power2.inOut"}, "-=1.5");
-  return tl;
+
+$(function(){
+
+
+$(".subscribe-channel").click(function(e){
+
+	e.preventDefault();
+	var url = $(this).data('url');
+	$.get(url,function(response){
+	$(".subscribe-channel").notify(response.message,response.type);
+	if(response.type == "success"){
+		$(".subscribe-channel").toggleClass("btn-disabled").text(response.btn_text);
+	}
+	});
+});
+
+
+
+});
+
+
+
+function why(tl,line) {
+
+split = new SplitText(".line", {type:"chars"}),
+
+tl.from(split.chars, {opacity:0, y:50, duration:2, ease:"back", stagger:0.05})
+
+	return tl;
 }
+
 
 }

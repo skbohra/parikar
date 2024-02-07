@@ -53,14 +53,9 @@ display:none;
 		<img src="{%static "images/menu.png"%}" class="menu-icon">
 		<a href="/"><img src="{%static "images/parikar.png"%}" class="logo"></a>
         </div>
-        <div class="nav-middle flex-div">
-            <div class="search-box flex-div">
-                <input type="text" placeholder="Search">
-		<img src="{%static "images/search.png"%}" >
-            </div>
-		<img src="{%static "images/voice-search.png"%}" class="mic-icon">
-        </div>
-        <div class="nav-right flex-div">
+	{%include 'search_box.html'%}
+
+	<div class="nav-right flex-div">
 		<a href="/new/" class="create-button">CREATE</a>
 		<img src="{%static "images/notification.png"%}" >
 		<img src="{%static "images/Jack.png"%}" class="user-icon">
@@ -69,9 +64,11 @@ display:none;
     <!-- end nav -->
     <div class="container play-container">
         <div class="row">
-            <div class="play-video">
-
-            <div class="right-sidebar">
+             
+            <div class="right-sidebar" style="margin:auto">
+		    <h4>Showing results for <i>{{query}} </i> - </h4>
+		    <hr>
+		    <br>
 		    {%for parik in pariks%}
 	     	    <div class="side-video-list">
 			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>

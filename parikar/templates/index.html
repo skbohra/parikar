@@ -53,14 +53,11 @@
 		<img src="{%static "images/menu.png"%}" class="menu-icon">
 		<img src="{%static "images/parikar.png"%}" class="logo">
         </div>
-        <div class="nav-middle flex-div">
-            <div class="search-box flex-div">
-                <input type="text" placeholder="Search">
-		<img src="{%static "images/search.png"%}" >
-            </div>
-		<img src="{%static "images/voice-search.png"%}" class="mic-icon">
-        </div>
-        <div class="nav-right flex-div">
+
+	{%include 'search_box.html'%}
+
+
+	<div class="nav-right flex-div">
 		<a href="/new/" class="create-button">CREATE</a>
 		<img src="{%static "images/notification.png"%}" >
 		<img src="{%static "images/Jack.png"%}" class="user-icon">
@@ -83,11 +80,11 @@
 
         <div class="subsribed-list">
             <h3>SUBSCRIBED</h3>
-	    <a href=""><img src="{%static "images/Jack.png"%}"><p>Jack Nicholson</p></a>
-	    <a href=""><img src="{%static "images/simon.png"%}"><p>Simon baker</p></a>
-	    <a href=""><img src="{%static "images/tom.png"%}"><p>Tom Hardy</p></a>
-	    <a href=""><img src="{%static "images/megan.png"%}"><p>Megan Ryan</p></a>
-	    <a href=""><img src="{%static "images/cameron.png"%}"><p>Cameron Diaz</p></a>
+	    {%for channel in subscribed_channels%}
+	    <a href=""><img src="{%static "images/cameron.png"%}"><p>{{channel.channel.channel_name|title}}</p></a>{%empty%}
+	    <p> No subscriptions!</p><br>
+	    <a href=""> Explore Channels </a>
+	    {%endfor%}
         </div>
     </div>
     <!-- end sidebar -->
@@ -114,9 +111,6 @@
                     </div>
                  </div>
              </div >
-	     {% if forloop.counter|divisibleby:"4" %}   
-		</div><div class="list-container">
-	     {%endif%}
 	     {%endfor%}
 
         </div>
