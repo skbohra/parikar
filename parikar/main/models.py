@@ -1,6 +1,8 @@
 from django.db import models
 
 from django.contrib.auth.models import * 
+from hitcount.models import HitCountMixin, HitCount
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class Font(models.Model):
@@ -16,6 +18,7 @@ class Animation(models.Model):
 class Parik(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
+    description = models.CharField(max_length=200,null=True,blank=True)
     content = models.TextField()
     created_on = models.DateTimeField()
     tags = models.TextField()
@@ -29,6 +32,8 @@ class Parik(models.Model):
     animation = models.ForeignKey(Animation,on_delete=models.CASCADE,blank=True,null=True)
     shuffle_colors_by_line  = models.BooleanField(default=False)
     shuffle_fonts_by_line  = models.BooleanField(default=False)
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
+     related_query_name='hit_count_generic_relation')
 
     def get_absolute_url(self):
         return f"/play/{self.id}/"
@@ -52,6 +57,6 @@ class Channel(models.Model):
 
 class ChannelSubscriber(models.Model):
     channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
-    subscriber = models.OneToOneField(User,on_delete=models.CASCADE)
+    subscriber = models.ForeignKey(User,on_delete=models.CASCADE)
     subscribed_on = models.DateTimeField(auto_now = True)
     is_active = models.BooleanField(default=True)

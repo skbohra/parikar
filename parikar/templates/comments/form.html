@@ -10,15 +10,14 @@
     {{ form.timestamp }}
     {{ form.security_hash }}
    <div class="add-comment">
-			<img src="{%static "images/Jack.png"%}">
-                        <input id="id_comment" type="text" name="comment" placeholder="Write comment...">
+                        
+			 <img src="{{request.user.channel.thumbnail.url}}">
+	   <input id="id_comment" type="text" name="comment" placeholder="Write comment...">
                     </div>
 			<button type="submit" class="create-button">Post</button>
 
 
     </form>
-{% else %}
-    <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
 {% endif %}
 
 

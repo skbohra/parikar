@@ -115,6 +115,10 @@ if (state == "play"){
 });
 
 
+$(".video").click(function(){
+$(".video-control-pause").click();
+
+});
 $(function(){
 
 

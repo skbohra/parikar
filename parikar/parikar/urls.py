@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("main.urls")),
     path(r'^comments/', include('django_comments.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 
@@ -30,3 +31,6 @@ urlpatterns = [
 from django.conf.urls.static import static
 
 urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns = urlpatterns  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -6,22 +6,22 @@ from .models import *
 from .forms import * 
 import datetime 
 from django.contrib.auth.decorators import login_required
-
+from hitcount.views import * 
 from .utils import *
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
 
-
+@login_required
 def index(request):
     pariks = Parik.objects.all().order_by('-id')
+    subscribed_channels = []
     if request.user.is_authenticated:
         subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
-    print(subscribed_channels)
     context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
     return render(request, "index.html", context)
 
-
+@login_required
 def single_video(request,id):
     parik = get_object_or_404(Parik,id=id)
     tags = parik.tags.split(" ")
@@ -52,11 +52,14 @@ def single_video(request,id):
     try:
         ChannelSubscriber.objects.get(channel=parik.user.channel,subscriber=request.user,is_active=True)
         is_subscribed = True
-    except ChannelSubscriber.DoesNotExist:
+    except: #ChannelSubscriber.DoesNotExist:
         if parik.user == request.user:
             is_subscribed = True
         else:
             is_subscribed = False
+    hit_count = HitCount.objects.get_for_object(parik)
+    hit_count_response = HitCountMixin.hit_count(request, hit_count)
+
     context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':pariks,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
     return render(request, "play-video.html", context)
 
@@ -76,10 +79,10 @@ def add_parik(request):
     return render(request, "new-parik.html", context)
 
 
-
+@login_required
 def search(request):
     term = request.GET['query']
-    pariks = Parik.objects.filter(title__contains=term)
+    pariks = Parik.objects.filter(title__icontains=term,tags__icontains=term)
     context = {'pariks':pariks,'query':term}
     return render(request, "search.html", context)
 
@@ -92,26 +95,24 @@ def subscribe_channel(request,id):
         message = {'message': 'Sorry you cannot subscribe your own channel','type':'error'}
     else:
         try:
+            channel_subscriber = ChannelSubscriber.objects.get(channel=channel,subscriber=request.user)
+            if channel_subscriber.is_active:
+                channel_subscriber.is_active = False
+                channel_subscriber.save()
+                message = {'message': 'Channel Unsubscribed','type':'success','btn_text':'Subscribe'}
+            else:
+                channel_subscriber.is_active = True
+                channel_subscriber.save()
+                message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subscribed'}
+        except ChannelSubscriber.DoesNotExist:
             channel_subscriber = ChannelSubscriber(channel=channel,subscriber=request.user,is_active=True)
             channel_subscriber.save()
-            message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subsribed'}
-        except Exception as e:
-            try:
-                channel_subscriber = ChannelSubscriber.objects.get(channel=channel,subscriber=request.user)
-                if channel_subscriber.is_active:
-                    channel_subscriber.is_active = False
-                    channel_subscriber.save()
-                    message = {'message': 'Channel Unsubscribed','type':'success','btn_text':'Subscribe'}
-                else:
-                    channel_subscriber.is_active = True
-                    channel_subscriber.save()
-                    message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subscribed'}
-            except Exception as e :
-                message = {'message':'Something went wrong','type':'error'}
+            message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subscribed'}
+            print(e)
         print(message)
     return JsonResponse(message)
 
-
+@login_required
 def channel_view(request,id):
     channel = get_object_or_404(Channel,id=id)
     context = {'channel': channel}

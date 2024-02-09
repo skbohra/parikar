@@ -6,7 +6,7 @@
 {% for comment in comment_list %}
 
 <div class="old-comment">
-                            <img src="{%static "images/Jack.png"%}">
+		<img src="{{comment.user.channel.thumbnail.url}}">
                         <div>
 				<h3>{{comment.user}} <span>2 days ago</span></h3>
 				<p>{{comment.comment}}</p>
