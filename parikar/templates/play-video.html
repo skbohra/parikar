@@ -55,9 +55,9 @@ display:none;
 			{%endfor%} 
                 </div>
 		<h3>{{parik.title}} </h3>
-		{%if parik.description%} <br> <p>{{parik.description}}</p>	{%endif%}
+		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
-			<p>{% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
+			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>
                     <div> 
 			    <a href=""><img src="/static/images/like.png">0</a>
 			    <a href=""><img src="/static/images/dislike.png">1</a>
@@ -76,6 +76,7 @@ display:none;
                 </div>
                 <div class="vid-description">
                     <hr>
+		    {%if not instant%}
 {% get_comment_count for parik as comment_count %}.
 <h4>{{comment_count}} Comments </h4>
                  
@@ -86,7 +87,7 @@ display:none;
 
 
 {% render_comment_list for parik %}
-
+{%endif%}
            </div>
            </div>
 

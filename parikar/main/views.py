@@ -118,3 +118,68 @@ def channel_view(request,id):
     context = {'channel': channel}
     return render(request, "channel.html", context)
 
+
+from bs4 import BeautifulSoup
+import requests
+import trafilatura
+
+
+@login_required
+def instant_video(request):
+    #parik = get_object_or_404(Parik,id=id)
+    #tags = parik.tags.split(" ")
+    #if parik.to_wrap:
+    url = request.GET.get("url", None)
+    if not url:
+        return render(request,'instant-url.html')
+    else:
+
+        downloaded = trafilatura.fetch_url(url)
+        text = trafilatura.extract(downloaded,include_comments=False)
+        lines = []
+        new_lines = text.split(".")
+        for line in new_lines:
+            new_line = textwrap.wrap(line,width=50)
+            lines = lines + new_line
+
+        alldata = []
+        for line in lines:
+            data = {}
+            data['line'] = line
+            #if parik.shuffle_fonts_by_line:
+            data['font'] = get_random_font()
+            #else:
+            #data['font'] = parik.font
+            #if parik.shuffle_colors_by_line:
+            data['color'] = get_random_color()
+            #else:
+            #    data['color'] = parik.color
+            alldata.append(data)
+
+        pariks = Parik.objects.all().order_by('-id')
+        '''
+        try:
+            ChannelSubscriber.objects.get(channel=parik.user.channel,subscriber=request.user,is_active=True)
+            is_subscribed = True
+        except: #ChannelSubscriber.DoesNotExist:
+            if parik.user == request.user:
+                is_subscribed = True
+            else:
+                is_subscribed = False
+        hit_count = HitCount.objects.get_for_object(parik)
+        hit_count_response = HitCountMixin.hit_count(request, hit_count)
+        '''
+        parik ={}
+        parik['user'] = request.user
+        parik['comments'] = None
+        parik['hits'] = None
+        parik['font_size'] = "20"
+        parik['animation'] = {"name":"default"}
+        parik['created_on'] = datetime.datetime.now()
+        parik['description'] = "Link - " + url
+        tags = None
+        is_subscribed = None
+        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':pariks,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+        return render(request, "play-video.html", context)
+
+        

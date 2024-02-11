@@ -68,7 +68,7 @@ nav{
     position: fixed;
     top: 0;
     padding-left: 2%;
-    padding-top: 80px;
+    padding-top: 110px;
 }
 .shortcut-links a img{
     width: 20px;
@@ -604,3 +604,9 @@ cursor: grab;
 
 }
 
+
+
+.url{
+padding-right:10px;
+text-decoration: "underline";
+}

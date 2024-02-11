@@ -24,6 +24,7 @@ tl
 		line, time,
 			{
 				opacity: 0,
+				delay:0.9,
 				y:y,
 			},
 			{	

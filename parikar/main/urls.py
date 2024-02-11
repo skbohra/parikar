@@ -14,6 +14,7 @@ widget_kwargs = {
 urlpatterns = [
     path("", views.index, name="index"),
     path("play/<int:id>/", views.single_video, name="single_video"),
+    path("play/instant/", views.instant_video, name="instant_video"),
     path("channel/<int:id>/", views.channel_view, name="channel"),
     path("new/", views.add_parik, name="add_parik"),
     path("search/", views.search, name="search"),
