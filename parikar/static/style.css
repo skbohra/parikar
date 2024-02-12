@@ -420,6 +420,7 @@ display: -webkit-box;
 	position: absolute;
 	opacity: 0;
 	font-family: Montserrat;
+	text-align:center;
 }
 .video-controls-box{
 background:#ccc;
@@ -481,7 +482,7 @@ background:#ccc;
   font-family: "Bungee Spice", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 80px
+  font-size: 3em;
 }
 
 .signup-btn{
@@ -610,3 +611,34 @@ cursor: grab;
 padding-right:10px;
 text-decoration: "underline";
 }
+
+
+
+@media screen and (max-width: 600px) {
+
+.headline{
+padding-left:120px;
+}
+
+.nav-middle{
+display:none;
+}
+.header-right-items{
+display:none;
+}
+
+.show-on-mobile{
+display:block !important;
+}
+.line{
+padding:15px !important;
+}
+}
+
+@media screen and (min-width: 600px) {
+
+.show-on-mobile{
+display:none !important;
+}
+}
+

@@ -10,16 +10,18 @@
 
 	{%block topmenu%}
 	<div class="nav-right flex-div">
-		<a href="/play/instant/" class="url">Instant Viewer</a>
-		<a href="/new/" class="create-button">CREATE</a>
-		<img src="{%static "images/notification.png"%}" >
+		<a href="/play/instant/" class="url header-right-items">Instant Viewer</a>
+		<a href="/new/" class="create-button header-right-items">CREATE</a>
+		<img class="header-right-items" src="{%static "images/notification.png"%}" >
 		<div class="menu">
 			<ul><li>
 			<a href="#">
 		<img src="{{request.user.channel.thumbnail.url}}" class="user-icon">
 			</a>
         <ul>
-          <li><a href="#">Profile</a></li>
+	<li class="show-on-mobile"><a href="/new/" class="">Create New</a></li>
+	<li class="show-on-mobile"><a href="/play/instant/" class="url">Instant Viewer</a></li>
+          <li><a href="#">Your Profile</a></li>
           <li>
 
 		  <a href="#">

@@ -25,7 +25,7 @@ class Parik(models.Model):
     thumbnail = models.ImageField(upload_to="thumbnails")
     to_wrap = models.BooleanField(default=False)
     font = models.CharField(max_length=100,default="inherit")
-    font_size = models.IntegerField(default=30)
+    font_size = models.FloatField(default=30)
     color = models.CharField(max_length=100,default="#ffffff")
     background = models.CharField(max_length=100,default="#222222")
     font_weight = models.IntegerField(default=100)

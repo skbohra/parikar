@@ -8,6 +8,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from hitcount.views import * 
 from .utils import *
+from .tasks import * 
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
@@ -24,6 +25,8 @@ def index(request):
 @login_required
 def single_video(request,id):
     parik = get_object_or_404(Parik,id=id)
+    #keywords = extract_keywords_bert(parik.content)
+    #print(keywords)
     tags = parik.tags.split(" ")
     if parik.to_wrap:
         lines = []
@@ -34,6 +37,7 @@ def single_video(request,id):
 
     else:
         lines = parik.content.split("\n")
+
     alldata = []
     for line in lines:
         data = {}
@@ -147,7 +151,7 @@ def instant_video(request):
             data = {}
             data['line'] = line
             #if parik.shuffle_fonts_by_line:
-            data['font'] = get_random_font()
+            data['font'] =  'inherit'
             #else:
             #data['font'] = parik.font
             #if parik.shuffle_colors_by_line:

@@ -7,6 +7,7 @@ form {
   padding: 10px 20px;
   background: #f4f7f8;
   border-radius: 8px;
+  float: left;
 }
 
 h1 {
@@ -97,6 +98,18 @@ flex:40%;
 flex:60%;
 margin:auto;
 }
+
+
+@media screen and (max-width: 600px) {
+  .form {
+	  flex:100%;
+  }
+
+  .large-logo{
+	display:none;
+  }
+}
+
 </style>
 
 
@@ -104,14 +117,16 @@ margin:auto;
 {%block content%}
 <div class="row">
 	<center>
-		<h3>Login to Explore </h3>
+		<h3>LOGIN TO EXPLORE </h3>
+		<br>
 	</center>
 </div>
 <div class="row">
-             
-		    <img class="large-logo" src="{%static "images/parikar-removebg.png"%}">
+	<div class="large-logo"> 
+		    <img class="" src="{%static "images/parikar-removebg.png"%}">
+	</div>
 		    <div class="form">
-		    <form style="width:50%" action="" method="POST">{%csrf_token%}
+		    <form style="" action="" method="POST">{%csrf_token%}
 		    {{form.as_div}}
 		    <button type="submit">Login</button>
 		    </form>
