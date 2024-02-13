@@ -618,7 +618,17 @@ text-decoration: "underline";
 
 .headline{
 padding-left:120px;
+float:center;
 }
+
+.bungee-spice-regular {
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2em;
+}
+
+
 
 .nav-middle{
 display:none;
@@ -642,3 +652,11 @@ display:none !important;
 }
 }
 
+.speed-item{
+float:right;
+display:inline;
+}
+
+.active-speed{
+background:pink;
+}

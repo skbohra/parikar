@@ -177,7 +177,7 @@ def instant_video(request):
         parik['user'] = request.user
         parik['comments'] = None
         parik['hits'] = None
-        parik['font_size'] = "20"
+        parik['font_size'] = "0.6"
         parik['animation'] = {"name":"default"}
         parik['created_on'] = datetime.datetime.now()
         parik['description'] = "Link - " + url

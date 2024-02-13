@@ -68,6 +68,31 @@ tl
 
 }
 
+
+$(".speed-button").click(function(e){
+
+e.preventDefault();
+var action = $(this).data("state");
+$(".speed-button").parent().removeClass("active-speed");
+$(this).parent().addClass("active-speed");
+
+
+if(action == "fast"){
+	tl.timeScale(1.5);
+}
+if(action == "normal"){
+	tl.timeScale(1);
+}
+if(action == "slow"){
+	tl.timeScale(0.75);
+}
+
+
+
+
+});
+
+
 var slider = $("#ctrl_slider");
 var sliderValue = {value:0};
 slider.slider({
