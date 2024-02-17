@@ -9,21 +9,30 @@ from django.contrib.auth.decorators import login_required
 from hitcount.views import * 
 from .utils import *
 from .tasks import * 
+from django.core.paginator import Paginator
+from el_pagination.decorators import page_template
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
 
 @login_required
-def index(request):
-    pariks = Parik.objects.all().order_by('-id')
+@page_template('homepage_videos_list.html')  # just add this decorator
+def index(request,extra_context=None,template="index.html"):
     subscribed_channels = []
     if request.user.is_authenticated:
         subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
+
+    pariks = Parik.objects.all().order_by('-id')
+    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
-    return render(request, "index.html", context)
+    return render(request, template, context)
 
 @login_required
-def single_video(request,id):
+@page_template('videos_list.html')  # just add this decorator
+def single_video(request,id=id,extra_context=None,template="play-video.html"):
     parik = get_object_or_404(Parik,id=id)
     #keywords = extract_keywords_bert(parik.content)
     #print(keywords)
@@ -36,9 +45,10 @@ def single_video(request,id):
             lines = lines + new_line
 
     else:
-        lines = parik.content.split("\n")
+        lines = parik.content.strip().split("\n")
 
     alldata = []
+    i = 1 
     for line in lines:
         data = {}
         data['line'] = line
@@ -50,9 +60,9 @@ def single_video(request,id):
             data['color'] = get_random_color()
         else:
             data['color'] = parik.color
+        data['line_id'] = "line-%d_%d" % (parik.id,i)  
         alldata.append(data)
-
-    pariks = Parik.objects.all().exclude(id=id).order_by('-id')
+        i = i + 1 
     try:
         ChannelSubscriber.objects.get(channel=parik.user.channel,subscriber=request.user,is_active=True)
         is_subscribed = True
@@ -64,8 +74,13 @@ def single_video(request,id):
     hit_count = HitCount.objects.get_for_object(parik)
     hit_count_response = HitCountMixin.hit_count(request, hit_count)
 
-    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':pariks,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
-    return render(request, "play-video.html", context)
+    pariks = Parik.objects.all().exclude(id=id).order_by('-id')
+    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+    return render(request, template, context)
 
 @login_required
 def add_parik(request):
@@ -129,7 +144,8 @@ import trafilatura
 
 
 @login_required
-def instant_video(request):
+@page_template('videos_list.html')  # just add this decorator
+def instant_video(request,extra_context=None,template="play-video.html"):
     #parik = get_object_or_404(Parik,id=id)
     #tags = parik.tags.split(" ")
     #if parik.to_wrap:
@@ -138,8 +154,14 @@ def instant_video(request):
         return render(request,'instant-url.html')
     else:
 
-        downloaded = trafilatura.fetch_url(url)
-        text = trafilatura.extract(downloaded,include_comments=False)
+        try:
+            instant = InstantParik.objects.get(user=request.user,url=url)
+            text = instant.content
+        except InstantParik.DoesNotExist:
+            downloaded = trafilatura.fetch_url(url)
+            text = trafilatura.extract(downloaded,include_comments=False)
+            instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="")
+            instant.save()
         lines = []
         new_lines = text.split(".")
         for line in new_lines:
@@ -161,6 +183,11 @@ def instant_video(request):
             alldata.append(data)
 
         pariks = Parik.objects.all().order_by('-id')
+        paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+
+ 
         '''
         try:
             ChannelSubscriber.objects.get(channel=parik.user.channel,subscriber=request.user,is_active=True)
@@ -183,7 +210,37 @@ def instant_video(request):
         parik['description'] = "Link - " + url
         tags = None
         is_subscribed = None
-        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':pariks,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
-        return render(request, "play-video.html", context)
+        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+        return render(request, template, context)
 
-        
+@login_required
+@page_template('homepage_videos_list.html')  # just add this decorator
+def explore(request,extra_context=None,template="explore.html"):
+    subscribed_channels = []
+    if request.user.is_authenticated:
+        subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
+
+    pariks = Parik.objects.all().order_by('-id')
+    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
+    return render(request, template, context)
+
+@login_required
+@page_template('homepage_videos_list.html')  # just add this decorator
+def subscription(request,extra_context=None,template="subscription.html"):
+    subscribed_channels = []
+    if request.user.is_authenticated:
+        subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
+        users = subscribed_channels.values_list('channel__owner')
+    pariks = Parik.objects.filter(user__in=users).order_by('-id')
+    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
+    return render(request, template, context)
+
+

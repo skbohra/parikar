@@ -60,3 +60,17 @@ class ChannelSubscriber(models.Model):
     subscriber = models.ForeignKey(User,on_delete=models.CASCADE)
     subscribed_on = models.DateTimeField(auto_now = True)
     is_active = models.BooleanField(default=True)
+
+
+class InstantParik(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    url = models.URLField()
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=200,null=True,blank=True)
+    content = models.TextField()
+    created_on = models.DateTimeField(auto_now=True)
+    tags = models.TextField()
+
+    def get_absolute_url(self):
+        return f"/play/instant/?url={self.url}/"
+

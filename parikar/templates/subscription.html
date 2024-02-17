@@ -4,15 +4,7 @@
 {% load el_pagination_tags %}
 {%block content%}
 
-<div class="banner">
-		<center>
-			<h3 class="headings"> An app for </h3>
-			<h2 class="headline bungee-spice-regular"> NON - <span class="feature"> creatives</span>  <span class="feature">influencers</span>  </h3>
-		</center>
-        </div>
-		<hr>
-		<br>
-		<h4 class="headings"> Trending Today </h4>
+		<h4 class="headings"> Content from you subscriptions  </h4>
         <div class="list-container endless_container ">
 		{%lazy_paginate 10 pariks%}
 		{%for parik in pariks%}

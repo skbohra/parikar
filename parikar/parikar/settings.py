@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     #'django_celery_beat',
+    'el_pagination'
 ]
 
 MIDDLEWARE = [

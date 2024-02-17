@@ -2,6 +2,7 @@
 {% load comments %}
 {%load voting_tags%}
 {% load hitcount_tags %}
+{% load el_pagination_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,8 +34,9 @@ display:none;
 			    
 			    {%for line in lines%}
 			    <div class="line">
-				    <span style="font-family:{{line.font}}; font-size:{{parik.font_size}}em; color:{{line.color}}; font-weight:{{parik.font_weight}}" > {{line.line}}
-</span>
+				    <span id="{{line.line_id}}" style="font-family:{{line.font}}; font-size:{{parik.font_size}}em; color:{{line.color}}; font-weight:{{parik.font_weight}}" > {{line.line}}</span>
+					    <br> <a href="#" data-line="{{line.line_id}}"  class="line-comment" id="{{line.line_id}}"><i class="iconoir-chat-bubble"></i> comments</a>
+
 </div>
 {%endfor%}
 
@@ -43,9 +45,11 @@ display:none;
 		<div class="video-controls-box">
 		<ul class="video-control-list">
 			<li class="video-control-item" style="display:inline"><i class='iconoir-pause play-pause-icon'></i><a href="#" id="play-pause-button" class="video-control-pause" data-state="play"> Pause</a></li>
-			<li class="video-control-item speed-item"><i class='iconoir-trekking'></i><a href="#" class="speed-button" id="speed-slow" data-state="slow"> Slow</a></li>
-			<li class="video-control-item speed-item active-speed"><i class='iconoir-stretching'></i><a href="#" class="speed-button" id="speed-normal" data-state="normal">Normal</a></li>
+			
 			<li class="video-control-item speed-item"><i class='iconoir-skateboarding'></i><a href="#" class="speed-button" id="speed-fast" data-state="fast">Fast</a></li>
+			<li class="video-control-item speed-item active-speed"><i class='iconoir-stretching'></i><a href="#" class="speed-button" id="speed-normal" data-state="normal">Normal</a></li>
+			<li class="video-control-item speed-item"><i class='iconoir-trekking'></i><a href="#" class="speed-button" id="speed-slow" data-state="slow"> Slow</a></li>
+			<li class="video-control-item speed-item"><i class='iconoir-yoga'></i><a href="#" class="speed-button" id="speed-slower" data-state="slower">Slower</a></li>
 
 		</ul>
 		<div id="ctrl_slider"></div>
@@ -96,7 +100,8 @@ display:none;
 
 
 
-            <div class="right-sidebar">
+            <div class="right-sidebar endless_container">
+		    {% lazy_paginate 5 pariks %}
 		    {%for parik in pariks%}
 	     	    <div class="side-video-list">
 			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
@@ -107,7 +112,10 @@ display:none;
                     </div>
                 </div>
 		{%endfor%}
-                     </div>
+    
+{% show_more "Load More" %}
+
+	    </div>
 
 
         </div>
@@ -115,6 +123,18 @@ display:none;
 
 
     </div>
+
+    <section class="popup">
+  <div class="popup__content">
+    <div class="close">
+      <span></span>
+      <span></span>
+    </div>
+    <div class="popup-data">hello my name is popup</div>
+  </div>
+</section>
+
+
     <script src="{%static "script.js"%}"></script>
     <script>
 	$(function(){
@@ -124,6 +144,12 @@ display:none;
 	$("#id_comment").notify("Comment posted!","success");
 	     }); 
 	});
+
+
+	
     </script>
+
+    <script src="{%static "el-pagination/js/el-pagination.js"%}"></script>
+    <script>$.endlessPaginate();</script>
 </body>
 </html>

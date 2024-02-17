@@ -26,9 +26,11 @@ tl
 				opacity: 0,
 				delay:0.9,
 				y:y,
+				autoAlpha:0
 			},
 			{	
 				opacity: 1,
+				autoAlpha:1,
 				y: 0,
 			},
 		2 ))
@@ -37,6 +39,7 @@ tl
 			{
 				delay: time,
 				opacity: 0,
+				autoAlpha:0,
 				y: -y,
 			},
 		2 ), 1.3)
@@ -55,7 +58,7 @@ tl
 				opacity: 1,
 				y: 0,
 			},
-		2 ))
+		2 )).addLabel("blueGreenSpin", "+=1")
 	.add ( TweenMax.staggerTo (
 		line, time,
 			{
@@ -82,10 +85,15 @@ if(action == "fast"){
 }
 if(action == "normal"){
 	tl.timeScale(1);
+	tl.seek("blueGreenSpin20");
 }
 if(action == "slow"){
 	tl.timeScale(0.75);
 }
+if(action == "slower"){
+	tl.timeScale(0.4);
+}
+
 
 
 
@@ -130,21 +138,57 @@ if (state == "play"){
 	$(this).text("Play");
 	$('.play-pause-icon').toggleClass("iconoir-pause");
 	$('.play-pause-icon').toggleClass("iconoir-play");
+	$.notify("Paused","info");
 } else{
 	tl.play();
 	$(this).data("state","play");
 	$(this).text("Pause");
 	$('.play-pause-icon').toggleClass("iconoir-pause");
 	$('.play-pause-icon').toggleClass("iconoir-play");
+	$.notify("Playing","info");
 
 	}
 });
 
 
+
+$(".line-comment").on("click",function(e) {
+if ($(this).css('opacity') == 1) {
+e.stopPropagation()
+e.preventDefault();
+
+$(".video-control-pause").click();
+var line_id = $(this).data("line") ;
+var line  = $("#"+line_id).text();
+
+$(".popup-data").text(line);
+
+$(".popup").fadeIn(500);
+
+}
+});
+$(".close").click(function() {
+  $(".popup").fadeOut(500);
+$(".video-control-pause").click();
+});
+
+
+
 $(".video").click(function(){
 $(".video-control-pause").click();
-
 });
+
+$(".line-comment").hover(function(){
+$(".video-control-pause").click();
+},
+function(){
+
+$(".video-control-pause").click();
+}
+);
+
+
+
 $(function(){
 
 
@@ -177,3 +221,8 @@ tl.from(split.chars, {opacity:0, y:50, duration:2, ease:"back", stagger:0.05})
 
 
 }
+
+
+
+
+

@@ -18,6 +18,8 @@ urlpatterns = [
     path("channel/<int:id>/", views.channel_view, name="channel"),
     path("new/", views.add_parik, name="add_parik"),
     path("search/", views.search, name="search"),
+    path("explore/", views.explore, name="explore"),
+    path("subscription/", views.subscription, name="subscription"),
     path("subscribe/<int:id>/", views.subscribe_channel, name="subscribe_channel"),
     re_path(
         r"^pariks/(?P<object_id>\d+)/(?P<direction>up|down|clear)vote/?$",

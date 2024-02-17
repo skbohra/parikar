@@ -1,0 +1,13 @@
+
+{% load hitcount_tags %}
+{%for parik in pariks%}
+<div class="side-video-list">
+			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
+                    <div class="vid-info">
+			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    <p>{{parik.user.username}}</p>
+                        <p> {% get_hit_count for parik %} Views</p>
+                    </div>
+                </div>
+		{%endfor%}
+ 
