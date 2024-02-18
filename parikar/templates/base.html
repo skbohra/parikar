@@ -1,0 +1,59 @@
+{%load static%}
+{% load hitcount_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%} Parikar {%endblock%}</title>
+
+    {%include 'includes.html'%}
+    <script src="{%static "index.js"%}" type="text/javascript"></script>
+
+    {%block css%}
+
+    {%endblock%}
+</head>
+<body>
+
+	{%include 'header.html'%}
+	<!-- end nav -->
+
+    <div class="sidebar">
+        <div class="shortcut-links">
+		<a href="/"><i class="iconoir-home"></i><p class="shortcut-links-item">Home</p></a>
+		<a href="/explore/"><img src="{%static "images/explore.png"%}"><p>Explore</p></a>
+		<a href="/subscription/"><img src="{%static "images/subscriprion.png"%}"><p>Subscriprion</p></a>
+		<a href="#"><img src="{%static "images/library.png"%}"><p>Library</p></a>
+		<a href="#"><img src="{%static "images/history.png"%}"><p>History</p></a>
+		<a href="#"><img src="{%static "images/playlist.png"%}"><p>Playlist</p></a>
+            <hr>
+        </div>
+
+        <div class="subsribed-list">
+            <h3>SUBSCRIBED</h3>
+	    {%for channel in subscribed_channels%}
+	    <a href="">
+		<img src="{{channel.channel.thumbnail.url}}">
+		    <p>{{channel.channel.channel_name|title}}</p></a>{%empty%}
+	    <p> No subscriptions!</p><br>
+	    <a href=""> Explore Channels </a>
+	    {%endfor%}
+        </div>
+    </div>
+    <!-- end sidebar -->
+    <div class="container">
+
+	    {%block content%}
+
+
+	    {%endblock%}
+
+
+    </div>
+
+    {%block js%}
+{%endblock%}
+</body>
+</html>

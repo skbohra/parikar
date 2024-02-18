@@ -1,0 +1,46 @@
+{%load static%}
+<nav class="flex-div">
+        <div class="nav-left flex-div">
+		<img src="{%static "images/menu.png"%}" class="menu-icon">
+		<a href="/"><img src="{%static "images/parikar-1.png"%}" class="logo"></a>
+        </div>
+
+	{%include 'search_box.html'%}
+
+
+	{%block topmenu%}
+	<div class="nav-right flex-div">
+		<a href="/play/instant/" class="url header-right-items">Instant Viewer</a>
+		<a href="/new/" class="create-button header-right-items">CREATE</a>
+		<img class="header-right-items" src="{%static "images/notification.png"%}" >
+		<div class="menu">
+			<ul><li>
+			<a href="#">
+		<img src="{{request.user.channel.thumbnail.url}}" class="user-icon">
+			</a>
+        <ul>
+	<li class="show-on-mobile"><a href="/new/" class="">Create New</a></li>
+	<li class="show-on-mobile"><a href="/play/instant/" class="url">Instant Viewer</a></li>
+          <li><a href="#">Your Profile</a></li>
+          <li>
+
+		  <a href="#">
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button class="link-btn" type="submit">Logout</button>
+</form>
+
+
+		  </a></li>
+        </ul>
+				</li>
+			</ul>
+		</div>
+        </div>
+	{%endblock%}
+    </nav>
+  

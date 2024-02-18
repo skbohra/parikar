@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+{%load static%}
+{% load comments %}
+{%load voting_tags%}
+{%block css%}
+<style>
+#id_honeypot{
+display:none;
+}
+</style>
+{%endblock%}
+{%block content%}
+        <div class="row">
+             
+            <div class="right-sidebar" style="margin:auto">
+		    <h4>Showing results for <i>{{query}} </i> - </h4>
+		    <hr>
+		    <br>
+		    {%for parik in pariks%}
+	     	    <div class="side-video-list">
+			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
+                    <div class="vid-info">
+			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    <p>{{parik.user.username}}</p>
+                        <p>15k Views</p>
+                    </div>
+                </div>
+		{%endfor%}
+                     </div>
+
+
+        </div>
+	{%endblock%}
+
+	{%block js%}
+	<script src="{%static "script.js"%}"></script>
+    <script>
+	$(function(){
+			    animation("{{parik.animation_type}}");
+	
+ $('#comment-form').ajaxForm(function() { 
+	$("#id_comment").notify("Comment posted!","success");
+	     }); 
+	});
+    </script>
+    {%endblock%}
+

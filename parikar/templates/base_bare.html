@@ -1,0 +1,39 @@
+{%load static%}
+{% load hitcount_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%} Parikar {%endblock%}</title>
+
+    {%include 'includes.html'%}
+    <script src="{%static "index.js"%}" type="text/javascript"></script>
+
+    {%block css%}
+
+    {%endblock%}
+</head>
+<body>
+
+	{%include 'header_bare.html'%}
+	<!-- end nav -->
+
+    <div class="sidebar">
+    </div>
+    <!-- end sidebar -->
+    <div class="container">
+
+	    {%block content%}
+
+
+	    {%endblock%}
+
+
+    </div>
+
+    {%block js%}
+{%endblock%}
+</body>
+</html>

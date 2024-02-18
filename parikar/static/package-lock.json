@@ -1,0 +1,24 @@
+{
+  "name": "static",
+  "lockfileVersion": 2,
+  "requires": true,
+  "packages": {
+    "": {
+      "dependencies": {
+        "gsap-trial": "^3.12.5"
+      }
+    },
+    "node_modules/gsap-trial": {
+      "version": "3.12.5",
+      "resolved": "https://registry.npmjs.org/gsap-trial/-/gsap-trial-3.12.5.tgz",
+      "integrity": "sha512-Mdq2sLBq6rt9qje/MoF/hRa/xKfvKOUdllPouU2Fhz1K6mpCk0SOGBDhxCrOrJXZ4O7YFFRFVADKIJVeHdKA8A=="
+    }
+  },
+  "dependencies": {
+    "gsap-trial": {
+      "version": "3.12.5",
+      "resolved": "https://registry.npmjs.org/gsap-trial/-/gsap-trial-3.12.5.tgz",
+      "integrity": "sha512-Mdq2sLBq6rt9qje/MoF/hRa/xKfvKOUdllPouU2Fhz1K6mpCk0SOGBDhxCrOrJXZ4O7YFFRFVADKIJVeHdKA8A=="
+    }
+  }
+}
