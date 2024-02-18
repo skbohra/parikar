@@ -2,7 +2,7 @@
 
 function animation(parik){
 gsap.registerPlugin(MotionPathPlugin, EasePack);
-gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
+//gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
 
 var line = $('.line');
 
