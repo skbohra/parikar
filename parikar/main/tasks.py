@@ -1,6 +1,5 @@
 from .celery import app
 
-from keybert import KeyBERT
 from main.models import Parik
 
 '''
