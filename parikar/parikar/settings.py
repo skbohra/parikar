@@ -166,3 +166,6 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+CSRF_TRUSTED_ORIGINS = ["https://parikar-production.up.railway.app"]
+
