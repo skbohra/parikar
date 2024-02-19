@@ -1,2 +1,2 @@
 web: gunicorn parikar.wsgi
-release: python manage.py migrate
+release: python manage.py loaddata initial.json
