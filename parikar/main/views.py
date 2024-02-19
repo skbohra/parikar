@@ -39,7 +39,7 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     tags = parik.tags.split(" ")
     if parik.to_wrap:
         lines = []
-        new_lines = parik.content.split(". ")
+        new_lines = parik.content.split(".")
         for line in new_lines:
             new_line = textwrap.wrap(line,width=50)
             lines = lines + new_line
@@ -163,7 +163,7 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="")
             instant.save()
         lines = []
-        new_lines = text.split(". ")
+        new_lines = text.split(".")
         for line in new_lines:
             new_line = textwrap.wrap(line,width=50)
             lines = lines + new_line
