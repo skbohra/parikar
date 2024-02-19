@@ -495,7 +495,6 @@ color: #012f61;
 .headline{
 
 margin-bottom:20px;
-margin-left:-400px;
 }
 
 .thumbnail{
@@ -616,8 +615,7 @@ text-decoration: "underline";
 @media screen and (max-width: 600px) {
 
 .headline{
-padding-left:120px;
-float:center;
+float:left;
 }
 
 .bungee-spice-regular {
