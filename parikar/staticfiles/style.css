@@ -416,7 +416,6 @@ display: -webkit-box;
 /* 	flex-basis: 50%; */
 	font-size: 40px;
 	color: #14f7c1;
-	letter-spacing: 10px;
 	position: absolute;
 	opacity: 0;
 	font-family: Montserrat;
@@ -496,7 +495,6 @@ color: #012f61;
 .headline{
 
 margin-bottom:20px;
-margin-left:-400px;
 }
 
 .thumbnail{
@@ -617,8 +615,7 @@ text-decoration: "underline";
 @media screen and (max-width: 600px) {
 
 .headline{
-padding-left:120px;
-float:center;
+float:left;
 }
 
 .bungee-spice-regular {
@@ -642,6 +639,7 @@ display:block !important;
 }
 .line{
 padding:15px !important;
+letter-spacing:normal;
 }
 }
 
