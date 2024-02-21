@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8i!aa_d*thxstftcafuav59p(d4_9v_d!o^gzmyq&bye*31a5&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*',]
 
@@ -170,6 +170,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CSRF_TRUSTED_ORIGINS = ["https://parikar-production.up.railway.app","https://parikar.org","https://www.parikar.org"]
 SITE_ID = 4
+
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+MAILJET_API_KEY = 'API-KEY'
+MAILJET_API_SECRET = 'API-SECRET'
+
 
 try:
     from .local_settings import *
