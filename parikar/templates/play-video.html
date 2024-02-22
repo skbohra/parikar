@@ -61,7 +61,9 @@ display:none;
 			<a href="/search/?query={{tag}}">{{tag}}</a> 
 			{%endfor%} 
                 </div>
+		<br>
 		<h3>{{parik.title}} </h3>
+		{%if instant%} {%if request.user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%} 
 		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
 			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>

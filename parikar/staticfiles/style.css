@@ -720,3 +720,15 @@ opacity:1;
 }
 
 
+
+.button{
+    background: #012f61;
+    color: #fff;
+    padding: 4px 10px;
+    border: 0;
+    outline: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+

@@ -160,7 +160,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         except InstantParik.DoesNotExist:
             downloaded = trafilatura.fetch_url(url)
             text = trafilatura.extract(downloaded,include_comments=False)
-            instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="")
+            metadata = trafilatura.extract_metadata(downloaded)
+            instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
             instant.save()
         lines = []
         new_lines = text.split(".")
@@ -208,6 +209,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         parik['animation'] = {"name":"default"}
         parik['created_on'] = datetime.datetime.now()
         parik['description'] = "Link - " + url
+        parik['title'] = instant.title
+        parik['instant'] = instant
         tags = None
         is_subscribed = None
         context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
@@ -242,5 +245,24 @@ def subscription(request,extra_context=None,template="subscription.html"):
 
     context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
     return render(request, template, context)
+
+@login_required
+def save_instant(request,id):
+    instant = get_object_or_404(InstantParik,id=id)
+    animation = Animation.objects.get(pk=1)
+    
+    if not instant.parik:
+        parik = Parik(title=instant.title,user=instant.user,content=instant.content,description=instant.description,tags=instant.tags,created_on=datetime.datetime.now(),to_wrap=True,animation=animation,shuffle_colors_by_line=True,shuffle_fonts_by_line=True)
+        parik.save()
+        instant.is_user_saved = True
+        instant.parik = parik
+        instant.save()
+
+        message = {'message': 'Post Saved','type':'success','btn_text':'Saved'}
+        print(message)
+    else:
+        message = {'message': 'Already Saved','type':'error','btn_text':'Saved'}
+
+    return HttpResponseRedirect(reverse("single_video", args=[instant.parik.id])) 
 
 

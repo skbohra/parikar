@@ -70,7 +70,8 @@ class InstantParik(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now=True)
     tags = models.TextField()
-
+    is_user_saved = models.BooleanField(default=False)
+    parik = models.ForeignKey(Parik,null=True,blank=True,on_delete=models.CASCADE)
     def get_absolute_url(self):
         return f"/play/instant/?url={self.url}/"
 

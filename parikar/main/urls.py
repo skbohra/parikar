@@ -17,6 +17,7 @@ urlpatterns = [
     path("play/instant/", views.instant_video, name="instant_video"),
     path("channel/<int:id>/", views.channel_view, name="channel"),
     path("new/", views.add_parik, name="add_parik"),
+    path("instant/save/<int:id>/", views.save_instant, name="save_instant"),
     path("search/", views.search, name="search"),
     path("explore/", views.explore, name="explore"),
     path("subscription/", views.subscription, name="subscription"),
