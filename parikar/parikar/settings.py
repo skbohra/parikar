@@ -177,7 +177,7 @@ EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
 MAILJET_API_KEY = 'API-KEY'
 MAILJET_API_SECRET = 'API-SECRET'
 
-
+MEDIA_ROOT =  BASE_DIR / "media"
 try:
     from .local_settings import *
 except ImportError:
