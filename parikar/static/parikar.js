@@ -4,6 +4,8 @@ function animation(parik){
 gsap.registerPlugin(MotionPathPlugin, EasePack);
 //gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
 
+var noSleep = new NoSleep();
+noSleep.enable(); // keep the screen on!
 var line = $('.line');
 
 var tl = new TimelineLite({
