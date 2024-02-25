@@ -64,7 +64,8 @@ display:none;
                 </div>
 		<br>
 		<h3>{{parik.title}} </h3>
-		{%if instant%} {%if request.user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%} 
+		
+		{%if request.user.is_authenticated%}{%if instant%} {%if request.user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
 		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
 			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>
@@ -79,11 +80,15 @@ display:none;
                 <div class="publisher">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div>
-			    <p><a href="{%url 'channel' parik.user.channel.id %}">{{parik.user.channel.channel_name|title}}</a></p>
+			    {%if not instant %}   <p><a href="{%url 'channel' parik.user.channel.id %}">{{parik.user.channel.channel_name|title}}</a></p>
 			    <span>{{parik.user.channel.subscribers}} Subscribers</span>
+			    {%else%}
+			   <p>Instant Viewer </p>
+			    {%endif%}
                     </div>
-		    <button type="button" {%if is_subscribed%} class="btn-disabled subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}"  {%else%} class="subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}" {%endif%}>{%if is_subscribed%} Subscribed {%else%} Subscribe {%endif%} </button>
-                </div>
+		    
+		    {%if request.user.is_authenticated%}  <button type="button" {%if is_subscribed%} class="btn-disabled subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}"  {%else%} class="subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}" {%endif%}>{%if is_subscribed%} Subscribed {%else%} Subscribe {%endif%} </button>
+		    {%endif%} </div>
                 <div class="vid-description">
                     <hr>
 		    {%if not instant%}
