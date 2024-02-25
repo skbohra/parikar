@@ -155,10 +155,12 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         try:
             instant = InstantParik.objects.get(user=request.user,url=url)
             text = instant.content
+            title = instant.title
         except: #InstantParik.DoesNotExist:
             downloaded = trafilatura.fetch_url(url)
             text = trafilatura.extract(downloaded,include_comments=False)
             metadata = trafilatura.extract_metadata(downloaded)
+            title = metadata.title
             try:
                 instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
                 instant.save()
@@ -210,7 +212,7 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         parik['animation'] = {"name":"default"}
         parik['created_on'] = datetime.datetime.now()
         parik['description'] = "Link - " + url
-        parik['title'] = metadata.title
+        parik['title'] =  title
         parik['instant'] = instant
         tags = None
         is_subscribed = None
