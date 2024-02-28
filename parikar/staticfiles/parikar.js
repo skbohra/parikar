@@ -13,7 +13,6 @@ var tl = new TimelineLite({
 				tl.restart();
 			}
 		});
-
  
 TweenLite.defaultEase = Circ.easeInOut;
 
@@ -45,6 +44,10 @@ tl
 				y: -y,
 			},
 		2 ), 1.3)
+
+var total_duration = new Date(tl.totalDuration() * 1000).toISOString().slice(11, 19);
+
+$(".total-time").text(total_duration);
 } 
 
 if (parik == "horizontal"){
@@ -87,7 +90,6 @@ if(action == "fast"){
 }
 if(action == "normal"){
 	tl.timeScale(1);
-	tl.seek("blueGreenSpin20");
 }
 if(action == "slow"){
 	tl.timeScale(0.75);
@@ -124,6 +126,9 @@ slider.slider({
 tl.eventCallback("onUpdate", function() {
   sliderValue.value = tl.progress() * 100;
   slider.slider(sliderValue);
+  var time_elapsed = new Date(tl.totalTime() * 1000).toISOString().slice(11, 19);
+  $(".time-elapsed").text(time_elapsed);
+
 });
 tl.eventCallback("onComplete", function() {
   gsap.to(slider, 1, {autoAlpha:1});
