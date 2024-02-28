@@ -32,7 +32,7 @@ display:none;
  <div class="play-video">
 
 	 <div class="video" style="background:{{parik.background}}">
-			    
+		 <span class="video-settings-button">Magic</span>			    
 			    {%for line in lines%}
 			    <div class="line">
 				    <span id="{{line.line_id}}" style="font-family:{{line.font}}; font-size:{{parik.font_size}}em; color:{{line.color}}; font-weight:{{parik.font_weight}}" > {{line.line}}</span>
@@ -46,7 +46,8 @@ display:none;
 		<div class="video-controls-box">
 		<ul class="video-control-list">
 			<li class="video-control-item" style="display:inline"><i class='iconoir-pause play-pause-icon'></i><a href="#" id="play-pause-button" class="video-control-pause" data-state="play"> Pause</a></li>
-			
+		
+			<li style="display:inline;" class="video-control-item"><span class="time-elapsed">00:00</span> / <span class="total-time">00:00</span></li>	
 			<li class="video-control-item speed-item"><i class='iconoir-skateboarding'></i><a href="#" class="speed-button" id="speed-fast" data-state="fast">Fast</a></li>
 			<li class="video-control-item speed-item active-speed"><i class='iconoir-stretching'></i><a href="#" class="speed-button" id="speed-normal" data-state="normal">Normal</a></li>
 			<li class="video-control-item speed-item"><i class='iconoir-trekking'></i><a href="#" class="speed-button" id="speed-slow" data-state="slow"> Slow</a></li>

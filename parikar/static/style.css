@@ -731,4 +731,9 @@ opacity:1;
     cursor: pointer;
 }
 
-
+.video-settings-button{
+position:relative;
+color:#fff;
+left:43%;
+top:-280px;
+}
