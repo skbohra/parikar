@@ -164,15 +164,6 @@ CELERY_BROKER_URL = config('CELERY_BROKER_REDIS_URL', default='redis://localhost
 # this allows you to schedule items in the Django admin.
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
-STORAGES = {
-  "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
-
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -190,6 +181,16 @@ ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 
 try:
     from .local_settings import *
+    STORAGES = {
+      "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
+
+
 except ImportError:
     MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"] + "media"
     new_directory = MEDIA_ROOT + 'media/thumbnails'
@@ -214,5 +215,14 @@ except ImportError:
     AWS_S3_SECRET_ACCESS_KEY = os.environ['S3_ACCESS_KEY']
     AWS_S3_SIGNATURE_VERSION = 's3v4'
 
+
+    STORAGES = {
+      "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 

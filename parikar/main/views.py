@@ -11,6 +11,7 @@ from .utils import *
 from .tasks import * 
 from django.core.paginator import Paginator
 from el_pagination.decorators import page_template
+import re
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
@@ -38,7 +39,9 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     tags = parik.tags.split(" ")
     if parik.to_wrap:
         lines = []
-        new_lines = parik.content.split(".")
+        #new_lines = parik.content.split(".")
+        new_lines = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', parik.content)
+
         for line in new_lines:
             new_line = textwrap.wrap(line,width=50)
             lines = lines + new_line
