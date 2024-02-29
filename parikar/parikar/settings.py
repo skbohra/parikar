@@ -173,9 +173,9 @@ SITE_ID = 4
 
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 
-EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
-MAILJET_API_KEY = 'API-KEY'
-MAILJET_API_SECRET = 'API-SECRET'
+#EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+#MAILJET_API_KEY = 'API-KEY'
+#MAILJET_API_SECRET = 'API-SECRET'
 
 #MEDIA_ROOT =  BASE_DIR / "media"
 
