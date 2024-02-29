@@ -179,7 +179,7 @@ MAILJET_API_SECRET = 'API-SECRET'
 
 #MEDIA_ROOT =  BASE_DIR / "media"
 
-#MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
 
 try:
     from .local_settings import *

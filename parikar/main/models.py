@@ -22,7 +22,7 @@ class Parik(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField()
     tags = models.TextField()
-    thumbnail = models.ImageField(upload_to="thumbnails/")
+    thumbnail = models.ImageField(upload_to="thumbnails")
     to_wrap = models.BooleanField(default=False)
     font = models.CharField(max_length=100,default="inherit")
     font_size = models.FloatField(default=0.6)
@@ -45,7 +45,7 @@ class Channel(models.Model):
     channel_name = models.CharField(max_length=100)
     about = models.TextField()
     url = models.URLField()
-    thumbnail = models.ImageField(upload_to="thumbnails/")
+    thumbnail = models.ImageField(upload_to="thumbnails")
     created_on = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     
