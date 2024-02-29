@@ -22,7 +22,7 @@ from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("main.urls")),
-    path(r'^comments/', include('django_comments.urls')),
+    path(r'comments/', include('django_comments.urls')),
     path('accounts/', include('allauth.urls')),
 ]
 
