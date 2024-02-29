@@ -144,7 +144,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_URL = 'media/'
+MEDIA_URL = 'mymedia/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -183,7 +183,7 @@ MAILJET_API_SECRET = 'API-SECRET'
 try:
     from .local_settings import *
 except ImportError:
-    MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"]
+    MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"] + "media"
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
