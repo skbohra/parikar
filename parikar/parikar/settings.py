@@ -184,7 +184,7 @@ try:
     from .local_settings import *
 except ImportError:
     MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"] + "media"
-    new_directory = MEDIA_ROOT + 'thumbnails'
+    new_directory = MEDIA_ROOT + 'media/thumbnails'
     if not os.path.exists(new_directory):
         os.makedirs(new_directory)
 
