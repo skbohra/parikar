@@ -206,6 +206,13 @@ except ImportError:
         'PORT': os.environ['DATABASE_PORT'],
         }
     }
+    
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_STORAGE_BUCKET_NAME = 'parikar'
+    AWS_S3_ENDPOINT_URL = 'https://b5e7bb3e2a53b05e5d40a6d7b59ec56b.r2.cloudflarestorage.com/parikar'
+    AWS_S3_ACCESS_KEY_ID = '121dc0cd2bfd503b823e41980e0a68b4'
+    AWS_S3_SECRET_ACCESS_KEY = '485799b124e8b5ba3127d2e7ce10b856899cac40a1ad96b34622ce59fb8b8466'
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 
 
