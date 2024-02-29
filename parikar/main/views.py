@@ -144,9 +144,6 @@ import trafilatura
 
 @page_template('videos_list.html')  # just add this decorator
 def instant_video(request,extra_context=None,template="play-video.html"):
-    #parik = get_object_or_404(Parik,id=id)
-    #tags = parik.tags.split(" ")
-    #if parik.to_wrap:
     url = request.GET.get("url", None)
     if not url:
         return render(request,'instant-url.html')
