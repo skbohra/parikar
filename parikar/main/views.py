@@ -180,18 +180,6 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         page_obj = paginator.get_page(page_number)
 
  
-        '''
-        try:
-            ChannelSubscriber.objects.get(channel=parik.user.channel,subscriber=request.user,is_active=True)
-            is_subscribed = True
-        except: #ChannelSubscriber.DoesNotExist:
-            if parik.user == request.user:
-                is_subscribed = True
-            else:
-                is_subscribed = False
-        hit_count = HitCount.objects.get_for_object(parik)
-        hit_count_response = HitCountMixin.hit_count(request, hit_count)
-        '''
         parik ={}
         parik['user'] = request.user
         parik['comments'] = None
