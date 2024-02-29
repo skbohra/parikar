@@ -170,14 +170,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         for line in lines:
             data = {}
             data['line'] = line
-            #if parik.shuffle_fonts_by_line:
             data['font'] =  'inherit'
-            #else:
-            #data['font'] = parik.font
-            #if parik.shuffle_colors_by_line:
             data['color'] = get_random_color()
-            #else:
-            #    data['color'] = parik.color
             alldata.append(data)
 
         pariks = Parik.objects.all().order_by('-id')
