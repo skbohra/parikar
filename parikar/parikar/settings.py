@@ -184,6 +184,10 @@ try:
     from .local_settings import *
 except ImportError:
     MEDIA_ROOT = os.environ["RAILWAY_VOLUME_MOUNT_PATH"] + "media"
+    new_directory = os.path.join(settings.MEDIA_ROOT, 'thumbnails')
+    if not os.path.exists(new_directory):
+        os.makedirs(new_directory)
+
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
