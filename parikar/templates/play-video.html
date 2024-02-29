@@ -66,7 +66,7 @@ display:none;
 		<br>
 		<h3>{{parik.title}} </h3>
 		
-		{%if request.user.is_authenticated%}{%if instant%} {%if request.user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
+		{%if user.is_authenticated%}{%if instant%} {%if user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
 		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
 			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>
@@ -88,7 +88,7 @@ display:none;
 			    {%endif%}
                     </div>
 		    
-		    {%if request.user.is_authenticated%}  <button type="button" {%if is_subscribed%} class="btn-disabled subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}"  {%else%} class="subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}" {%endif%}>{%if is_subscribed%} Subscribed {%else%} Subscribe {%endif%} </button>
+		    {%if user.is_authenticated%}  <button type="button" {%if is_subscribed%} class="btn-disabled subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}"  {%else%} class="subscribe-channel" data-url="{%url 'subscribe_channel' parik.user.channel.id%}" {%endif%}>{%if is_subscribed%} Subscribed {%else%} Subscribe {%endif%} </button>
 		    {%endif%} </div>
                 <div class="vid-description">
                     <hr>

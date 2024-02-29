@@ -153,7 +153,7 @@ def instant_video(request,extra_context=None,template="play-video.html"):
     else:
 
         try:
-            instant = InstantParik.objects.get(user=request.user,url=url)
+            instant = InstantParik.objects.get(url=url)
             text = instant.content
             title = instant.title
         except: #InstantParik.DoesNotExist:
@@ -161,11 +161,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             text = trafilatura.extract(downloaded,include_comments=False)
             metadata = trafilatura.extract_metadata(downloaded)
             title = metadata.title
-            try:
-                instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
-                instant.save()
-            except:
-              instant = None 
+            instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
+            instant.save()
         lines = []
         new_lines = text.split(".")
         for line in new_lines:
