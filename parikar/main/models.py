@@ -64,7 +64,7 @@ class ChannelSubscriber(models.Model):
 
 class InstantParik(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    url = models.URLField()
+    url = models.URLField(max_length=200)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200,null=True,blank=True)
     content = models.TextField()
