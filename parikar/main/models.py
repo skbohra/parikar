@@ -14,7 +14,8 @@ class FontColor(models.Model):
 
 class Animation(models.Model):
     name = models.CharField(max_length=100)
-    
+    def __str__(self):
+        return self.name
 class Parik(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
