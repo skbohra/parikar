@@ -8,7 +8,6 @@ botocore==1.34.52
 bs4==0.0.2
 celery==5.3.6
 certifi==2024.2.2
-cffi==1.16.0
 chardet==5.2.0
 charset-normalizer==3.3.2
 click==8.1.7
