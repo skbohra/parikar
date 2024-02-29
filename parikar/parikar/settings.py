@@ -171,11 +171,7 @@ CSRF_TRUSTED_ORIGINS = ["https://parikar-production.up.railway.app","https://par
 SITE_ID = 4
 
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
-
-#EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
-#MAILJET_API_KEY = 'API-KEY'
-#MAILJET_API_SECRET = 'API-SECRET'
-
+ACCOUNT_EMAIL_REQUIRED = True
 #MEDIA_ROOT =  BASE_DIR / "media"
 
 
@@ -225,4 +221,8 @@ except ImportError:
         },
     }
 
+    EMAIL_BACKEND = 'django_mailjet.backends.MailjetBackend'
+    MAILJET_API_KEY = os.environ['MAILJET_API_KEY']
+    MAILJET_API_SECRET = os.environ['MAILJET_API_SECRET']
+    DEFAULT_FROM_EMAIL = 'human@parikar.org'
 
