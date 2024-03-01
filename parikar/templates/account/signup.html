@@ -16,7 +16,19 @@
 	<div class="large-logo"> 
 		    <img class="" src="{%static "images/parikar-removebg.png"%}">
 	</div>
-		    <div class="form">
+
+
+
+	<div class="form">
+
+		{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 		    <form style="" action="" method="POST">{%csrf_token%}
 		    {{form.as_div}}
 		    <button type="submit">Login</button>
