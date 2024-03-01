@@ -172,7 +172,10 @@ SITE_ID = 4
 
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = True
 #MEDIA_ROOT =  BASE_DIR / "media"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 try:
@@ -225,4 +228,3 @@ except ImportError:
     MAILJET_API_KEY = os.environ['MAILJET_API_KEY']
     MAILJET_API_SECRET = os.environ['MAILJET_API_SECRET']
     DEFAULT_FROM_EMAIL = 'human@parikar.org'
-
