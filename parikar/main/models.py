@@ -18,7 +18,7 @@ class Animation(models.Model):
         return self.name
 class Parik(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     description = models.CharField(max_length=200,null=True,blank=True)
     content = models.TextField()
     created_on = models.DateTimeField()

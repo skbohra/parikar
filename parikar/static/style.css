@@ -414,12 +414,12 @@ display: -webkit-box;
 
 .line {
 /* 	flex-basis: 50%; */
-	font-size: 40px;
 	color: #14f7c1;
 	position: absolute;
 	opacity: 0;
 	font-family: Montserrat;
 	text-align:center;
+	font-size:3em;
 }
 .video-controls-box{
 background:#ccc;
