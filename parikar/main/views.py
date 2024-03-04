@@ -161,8 +161,11 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             text = trafilatura.extract(downloaded,include_comments=False)
             metadata = trafilatura.extract_metadata(downloaded)
             title = metadata.title
-            instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
-            instant.save()
+            try:
+                instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
+                instant.save()
+            except:
+                pass
         lines = []
         new_lines = text.split(".")
         for line in new_lines:
@@ -192,7 +195,10 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         parik['created_on'] = datetime.datetime.now()
         parik['description'] = "Link - " + url
         parik['title'] =  title
-        parik['instant'] = instant
+        try:
+            parik['instant'] = instant
+        except:
+            pass
         tags = None
         is_subscribed = None
         context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
