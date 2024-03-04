@@ -151,6 +151,7 @@ MEDIA_URL = 'mymedia/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FROM_EMAIL = 'human@parikar.org'
 
 
 # save Celery task results in Django's database
