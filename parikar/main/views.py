@@ -153,7 +153,7 @@ def instant_video(request,extra_context=None,template="play-video.html"):
     else:
 
         try:
-            instant = InstantParik.objects.get(url=url,user=request.user)
+            instant = InstantParik.objects.get(url=url)
             text = instant.content
             title = instant.title
         except: #InstantParik.DoesNotExist:
