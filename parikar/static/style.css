@@ -306,6 +306,8 @@ nav{
 .vid-description{
     padding-left: 55px;
     margin: 15px 0;
+    background:#eee;
+    padding-bottom:10px;
 }
 .vid-description p{
     font-size: 14px;
