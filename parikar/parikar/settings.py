@@ -230,3 +230,4 @@ except ImportError:
     MAILJET_API_KEY = os.environ['MAILJET_API_KEY']
     MAILJET_API_SECRET = os.environ['MAILJET_API_SECRET']
     DEFAULT_FROM_EMAIL = 'human@parikar.org'
+    DEBUG = os.environ['DEBUG']
