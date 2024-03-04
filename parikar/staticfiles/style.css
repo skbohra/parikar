@@ -189,11 +189,12 @@ nav{
         display: none;
     }
     .nav-right .user-icon{
-        display: block;
+        display: inline;
         width: 30px;
+	vertical-align:middle;
     }
     .nav-middle .search-box input{
-        width: 240px;
+        width: 220px;
     }
     .nav-middle .mic-icon{
         display: none;
