@@ -106,9 +106,16 @@ display:none;
            </div>
            </div>
 
-
-
-            <div class="right-sidebar endless_container">
+		   <div class="right-sidebar">
+			   <hr class="border">
+			   <br>
+			   {%include 'search_box.html'%}
+			   <br>
+			   <hr class="border">
+			   <br>
+			   <div class="endless_container">
+			<h2> Suggested Posts </h2>
+			<br>
 		    {% lazy_paginate 5 pariks %}
 		    {%for parik in pariks%}
 	     	    <div class="side-video-list">
