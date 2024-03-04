@@ -8,4 +8,9 @@ menuIcon.onclick = function(){
 }
 
 
+$(function(){
+$(".search-button").click(function(e){
 
+	$(this).parent().submit();
+});
+});

@@ -193,7 +193,7 @@ nav{
         width: 30px;
     }
     .nav-middle .search-box input{
-        width: 100px;
+        width: 250px;
     }
     .nav-middle .mic-icon{
         display: none;
@@ -626,9 +626,11 @@ float:left;
 }
 
 
+.logo{
 
+width:50px !important;
+}
 .nav-middle{
-display:none;
 }
 .header-right-items{
 display:none;
