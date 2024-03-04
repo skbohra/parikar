@@ -194,7 +194,7 @@ nav{
 	vertical-align:middle;
     }
     .nav-middle .search-box input{
-        width: auto;
+        width: 240px;
 	font-size:12px;
     }
     .nav-middle .mic-icon{
@@ -629,7 +629,6 @@ float:left;
 
 
 .logo{
-
 width:50px !important;
 }
 .nav-middle{
