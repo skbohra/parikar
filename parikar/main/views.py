@@ -161,11 +161,14 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             text = trafilatura.extract(downloaded,include_comments=False)
             metadata = trafilatura.extract_metadata(downloaded)
             title = metadata.title
-            if request.user.is_authenticated:
-                instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
-            else:
-                instant = InstantParik(url=url,content=text,description=url,tags="",title=metadata.title)
-            instant.save()
+            try:
+                if request.user.is_authenticated:
+                    instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
+                else:
+                    instant = InstantParik(url=url,content=text,description=url,tags="",title=metadata.title)
+                instant.save()
+            except:
+                pass
         lines = []
         new_lines = text.split(".")
         for line in new_lines:
