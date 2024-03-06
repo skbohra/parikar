@@ -1,5 +1,4 @@
 
-
 function animation(parik){
 gsap.registerPlugin(MotionPathPlugin, EasePack);
 //gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
@@ -104,9 +103,9 @@ if(action == "slower"){
 
 });
 
-
-var slider = $("#ctrl_slider");
 var sliderValue = {value:0};
+var slider = $("#ctrl_slider");
+
 slider.slider({
   range: false,
   min: 0,
@@ -123,9 +122,40 @@ slider.slider({
   }
 });
 
+/*
+var slider = new RangeSliderPips({
+  target: document.getElementById("#ctrl_slider"),
+  props: {
+    min: -50,
+    max: 50,
+    pips: true,
+    pipstep: 1,
+    all: "label",
+    float: true,
+    handleFormatter: (v) => {
+      return v;
+    }
+  }
+});
+*/
+
+/*
+var slider = new RangeSliderPips({
+    target: document.querySelector("#ctrl_slider"),
+    props: { values: [100], pips: true,pipstep: 1,float:true,    suffix: "%" }
+  });
+
+slider.$on('change', function(e) {
+  tl.progress( e.detail.value / 100 );
+});
+*/
+
 tl.eventCallback("onUpdate", function() {
   sliderValue.value = tl.progress() * 100;
   slider.slider(sliderValue);
+  //slider.$set({ values: [ tl.progress()*100 ]});
+
+
   var time_elapsed = new Date(tl.totalTime() * 1000).toISOString().slice(11, 19);
   $(".time-elapsed").text(time_elapsed);
 
@@ -215,16 +245,6 @@ $(".subscribe-channel").click(function(e){
 
 });
 
-
-
-function why(tl,line) {
-
-split = new SplitText(".line", {type:"chars"}),
-
-tl.from(split.chars, {opacity:0, y:50, duration:2, ease:"back", stagger:0.05})
-
-	return tl;
-}
 
 
 }

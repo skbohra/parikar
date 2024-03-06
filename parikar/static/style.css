@@ -51,7 +51,7 @@ nav{
     border-radius: 25px;
 }
 .nav-middle .search-box input{
-    width: auto;
+    width: 400px;
     border: 0;
     outline: 0;
     background: transparent;
