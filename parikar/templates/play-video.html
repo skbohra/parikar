@@ -125,7 +125,11 @@ display:none;
 		    {% lazy_paginate 5 pariks %}
 		    {%for parik in pariks%}
 	     	    <div class="side-video-list">
+			    {%if parik.thumbnail%}
+			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="{{parik.thumbnail.url}}"></a>
+			    {%else%}
 			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
+			    {%endif%}
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
 			    <p>{{parik.user.username}}</p>

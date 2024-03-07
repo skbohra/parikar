@@ -4,7 +4,6 @@ from django.contrib.auth.models import *
 from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 
-from django_gamification.models import GamificationInterface
 
 class Font(models.Model):
     font_name = models.CharField(max_length=50)
@@ -77,10 +76,10 @@ class InstantParik(models.Model):
     def get_absolute_url(self):
         return f"/play/instant/?url={self.url}/"
 
-class BadgeUser(models.Model):
-    badge_data = models.OneToOneField(User,on_delete=models.CASCADE)
-    interface = models.ForeignKey(GamificationInterface,on_delete=models.CASCADE)
     
 
 
-
+class ServiceAPIKEY(models.Model):
+    service_name = models.CharField(max_length=100)
+    url = models.URLField()
+    api_key = models.CharField(max_length=200)
