@@ -231,3 +231,22 @@ except ImportError:
     MAILJET_API_SECRET = os.environ['MAILJET_API_SECRET']
     DEFAULT_FROM_EMAIL = 'human@parikar.org'
     SERVER_EMAIL = 'human@parikar.org'
+
+    LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+    }
+
