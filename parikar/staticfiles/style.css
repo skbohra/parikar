@@ -749,3 +749,16 @@ top:-280px;
 .border{
 color:#ccc;
 }
+
+.inline{
+
+display:inline;
+}
+
+.float-right{
+float:right;
+}
+
+.float-left{
+float:left;
+}

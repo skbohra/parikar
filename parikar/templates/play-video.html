@@ -14,6 +14,7 @@
     {%include 'includes.html'%}
     <script src="{%static "NoSleep.min.js"%}" type="text/javascript"></script>
     <script src="{%static "parikar.js"%}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
 <style>
 #id_honeypot{
 display:none;
@@ -54,6 +55,8 @@ display:none;
 
 		</ul>
 		<div id="ctrl_slider"></div>
+		<div id="slider_milestones">
+		</div>
 
 		</div>
 
@@ -63,16 +66,19 @@ display:none;
 			{%endfor%} 
                 </div>
 		<br>
-		<h3>{{parik.title}} </h3>
-		
+		<h3 class="inline">{{parik.title}} </h3>
+		<button  style="margin-left:10px;" class="button inline float-right" data-sharer="twitter" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-twitter"></i> Share on X</button>&nbsp;&nbsp;
+		<button  class="button inline float-right" data-sharer="facebook" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-facebook"></i>Share on FB</button>
+
+
+		<br>	
 		{%if user.is_authenticated%}{%if instant%} {%if user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
 		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
 			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>
                     <div> 
 			    <a href=""><img src="/static/images/like.png">0</a>
-			    <a href=""><img src="/static/images/dislike.png">1</a>
-			    <a href=""><img src="/static/images/share.png">Share</a>
+			    <a href=""><img src="/static/images/dislike.png">0</a>
 			    <a href=""><img src="/static/images/save.png">Save</a>
                     </div>
                 </div>
