@@ -77,9 +77,7 @@ class InstantParik(models.Model):
         return f"/play/instant/?url={self.url}/"
 
     
-'''
 class ServiceAPIKEY(models.Model):
     service_name = models.CharField(max_length=100)
     url = models.URLField()
     api_key = models.CharField(max_length=200)
-'''
