@@ -81,3 +81,11 @@ class ServiceAPI(models.Model):
     service_name = models.CharField(max_length=100)
     url = models.URLField()
     api_key = models.CharField(max_length=200)
+
+
+class Hope(models.Model):
+    service_name = models.CharField(max_length=100)
+    url = models.URLField()
+    api_key = models.CharField(max_length=200)
+
+
