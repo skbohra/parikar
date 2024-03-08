@@ -23,7 +23,7 @@ class Parik(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField()
     tags = models.TextField()
-    thumbnail = models.ImageField(upload_to="thumbnails")
+    thumbnail = models.ImageField(upload_to="thumbnails",null=True,blank=True)
     to_wrap = models.BooleanField(default=False)
     font = models.CharField(max_length=100,default="inherit")
     font_size = models.FloatField(default=0.6)
