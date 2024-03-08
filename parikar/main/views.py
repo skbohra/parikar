@@ -47,7 +47,7 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
         
         for i, image in enumerate(data["artifacts"]):
             data = ContentFile(base64.b64decode(image["base64"])) 
-            uuid = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+            uuid = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             file_name = api_key.service_name+"_generated_"+ uuid + ".png"
             parik.thumbnail.save(file_name, data, save=True)
     if parik.to_wrap:
