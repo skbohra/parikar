@@ -8,6 +8,16 @@
 		<br>
 		<hr class="border">
 		<br>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
 		<h4 class="headings"> Trending Today </h4>
         <div class="list-container endless_container ">
 		{%lazy_paginate 10 pariks%}
@@ -38,7 +48,6 @@
 	{%block js%}
 
 
-    <script src="{%static "script.js"%}"></script>
 <script>
 var line = $('.feature');
 
