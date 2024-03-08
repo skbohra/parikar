@@ -14,7 +14,7 @@ from el_pagination.decorators import page_template
 import re
 import base64
 from django.core.files.base import ContentFile
-
+import random
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
@@ -45,8 +45,9 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
         data = stability_text_to_image(parik.title,api_key)
         
         for i, image in enumerate(data["artifacts"]):
-            data = ContentFile(base64.b64decode(image["base64"]))  
-            file_name = api_key.service_name+"_generated" + ".png"
+            data = ContentFile(base64.b64decode(image["base64"])) 
+            uuid = ''.join(random.choices(string.ascii_uppercase + string.digits, k=N))
+            file_name = api_key.service_name+"_generated_"+ uuid + ".png"
             parik.thumbnail.save(file_name, data, save=True)
     if parik.to_wrap:
         lines = []
