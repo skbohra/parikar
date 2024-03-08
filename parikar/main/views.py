@@ -15,6 +15,7 @@ import re
 import base64
 from django.core.files.base import ContentFile
 import random
+import string
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
