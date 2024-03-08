@@ -32,7 +32,7 @@ def index(request,extra_context=None,template="index.html"):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    context = {'pariks':pariks,'subscribed_channels':subscribed_channels}
+    context = {'pariks':page_obj,'subscribed_channels':subscribed_channels}
     return render(request, template, context)
 
 @page_template('videos_list.html')  # just add this decorator

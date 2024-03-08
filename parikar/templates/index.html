@@ -20,7 +20,7 @@
 
 		<h4 class="headings"> Trending Today </h4>
         <div class="list-container endless_container ">
-		{%lazy_paginate 10 pariks%}
+		{%paginate 8 pariks%}
 		{%for parik in pariks%}
 		<div class="vid-list">
 			{%if not parik.thumbnail%}

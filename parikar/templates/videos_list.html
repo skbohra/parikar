@@ -2,7 +2,11 @@
 {% load hitcount_tags %}
 {%for parik in pariks%}
 <div class="side-video-list">
+			    {%if parik.thumbnail%}
+			    <a href="{%url 'single_video' parik.id%}"><img src="{{parik.thumbnail.url}}" class="small-thumbnail"></a>
+			    {%else%}
 			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
+			    {%endif%}
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
 			    <p>{{parik.user.username}}</p>
