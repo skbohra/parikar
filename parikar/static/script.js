@@ -24,5 +24,9 @@ success_message.parent().hide();
 error_message.parent().hide();
 info_message.parent().hide();
 
+$(".search-button").click(function(){
+
+	$(".search-form").submit();
+});
 
 });

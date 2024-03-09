@@ -3,16 +3,11 @@
 {% load hitcount_tags %}
 {%for parik in pariks%}
 		<div class="vid-list">
-			{%if parik.thumbnail%}
-			<a href="{%url 'single_video' parik.id%}"><img style="width:350px; height:233px;" src="{{parik.thumbnail.url}}" class="thumbnail"></a>
-			{%else%}
-			<a href="{%url 'single_video' parik.id%}"><img style="width:350px; height:233px;" src="https://source.unsplash.com/random?{{parik.title}}" class="thumbnail"></a>
-			{%endif%}
                  <div class="flex-div">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
-			    <p>{{parik.user.username|title}}</p>
+			    <p><b>By:</b>{{parik.user.username|title}}</p>
 			    <p> {% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
                     </div>
                  </div>

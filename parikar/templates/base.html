@@ -20,29 +20,6 @@
 	{%include 'header.html'%}
 	<!-- end nav -->
 
-    <div class="sidebar">
-        <div class="shortcut-links">
-		<a href="/"><i class="iconoir-home"></i><p class="shortcut-links-item">Home</p></a>
-		<a href="/explore/"><img src="{%static "images/explore.png"%}"><p>Explore</p></a>
-		<a href="/subscription/"><img src="{%static "images/subscriprion.png"%}"><p>Subscriprion</p></a>
-		<a href="#"><img src="{%static "images/library.png"%}"><p>Library</p></a>
-		<a href="#"><img src="{%static "images/history.png"%}"><p>History</p></a>
-		<a href="#"><img src="{%static "images/playlist.png"%}"><p>Playlist</p></a>
-            <hr>
-        </div>
-
-        <div class="subsribed-list">
-            <h3>SUBSCRIBED</h3>
-	    {%for channel in subscribed_channels%}
-	    <a href="">
-		<img src="{{channel.channel.thumbnail.url}}">
-		    <p>{{channel.channel.channel_name|title}}</p></a>{%empty%}
-	    <p> No subscriptions!</p><br>
-	    <a href=""> Explore Channels </a>
-	    {%endfor%}
-        </div>
-    </div>
-    <!-- end sidebar -->
     <div class="container">
 
 	    {%block content%}

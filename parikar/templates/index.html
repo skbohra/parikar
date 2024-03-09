@@ -3,7 +3,7 @@
 {% load hitcount_tags %}
 {% load el_pagination_tags %}
 {%block content%}
-<div class="flex-div">
+<div class="flex-div search-container">
 			   {%include 'search_box.html'%}
 		<br>
 		<hr class="border">
@@ -17,14 +17,24 @@
 </ul>
 {% endif %}
 </div>
-<div class="flex-div">
-<div class="flex-div">
-        <div class="list-container endless_container ">
-		<h4 class="headings"> Trending Today </h4>
+        <div class="worko-tabs">
+  
+    <input class="state" type="radio" title="tab-one" name="tabs-state" id="tab-one" checked />
+    <input class="state" type="radio" title="tab-two" name="tabs-state" id="tab-two" />
+    <input class="state" type="radio" title="tab-three" name="tabs-state" id="tab-three" />
+
+    <div class="tabs flex-tabs">
+        <label for="tab-one" id="tab-one-label" class="tab">Trending Today</label>
+        <label for="tab-two" id="tab-two-label" class="tab">Popular Posts</label>
+        <label for="tab-three" id="tab-three-label" class="tab">Your stuff</label>
+
+
+      <div id="tab-one-panel" class="panel active">
+      <div class="list-container endless_container ">
 		{%paginate 8 pariks%}
 		{%for parik in pariks%}
 		<div class="vid-list">
-                 <div class="flex-div">
+                 <div class="flex-div vid-content">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
@@ -38,14 +48,17 @@
 
 	     {% show_more "Load More"%}
         </div>
-</div>
-<div class="flex-div">
-        <div class="list-container endless_container ">
-	<h4 class="headings"> Trending Today </h4>
-		{%paginate 8 pariks%}
-		{%for parik in pariks%}
+
+
+
+	</div>
+        <div id="tab-two-panel" class="panel">
+      <div class="list-container endless_container ">
+		{%paginate 8 popular_pariks%}
+	
+		{%for parik in popular_pariks%}
 		<div class="vid-list">
-                 <div class="flex-div">
+                 <div class="flex-div vid-content">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
@@ -59,14 +72,17 @@
 
 	     {% show_more "Load More"%}
         </div>
-</div>
-<div class="flex-div">
-        <div class="list-container endless_container ">
-	<h4 class="headings"> Trending Today </h4>
-		{%paginate 8 pariks%}
-		{%for parik in pariks%}
+
+
+
+	</div>
+        <div id="tab-three-panel" class="panel">
+      
+<div class="list-container endless_container ">
+		{%paginate 8 your_pariks%}
+		{%for parik in your_pariks%}
 		<div class="vid-list">
-                 <div class="flex-div">
+                 <div class="flex-div vid-content">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
@@ -80,7 +96,14 @@
 
 	     {% show_more "Load More"%}
         </div>
+
+
+
+	</div>
+    </div>
+
 </div>
+
 </div>
 
 
