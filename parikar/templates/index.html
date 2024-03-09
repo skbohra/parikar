@@ -3,7 +3,7 @@
 {% load hitcount_tags %}
 {% load el_pagination_tags %}
 {%block content%}
-
+<div class="flex-div">
 			   {%include 'search_box.html'%}
 		<br>
 		<hr class="border">
@@ -16,23 +16,20 @@
     {% endfor %}
 </ul>
 {% endif %}
-
-
-		<h4 class="headings"> Trending Today </h4>
+</div>
+<div class="flex-div">
+<div class="flex-div">
         <div class="list-container endless_container ">
+		<h4 class="headings"> Trending Today </h4>
 		{%paginate 8 pariks%}
 		{%for parik in pariks%}
 		<div class="vid-list">
-			{%if not parik.thumbnail%}
-			<a href="{%url 'single_video' parik.id%}"><img style="width:350px; height:233px;" src="https://source.unsplash.com/random?{{parik.title}}" class="thumbnail"></a>
-			{%else%}
-			<a href="{%url 'single_video' parik.id%}"><img style="width:350px; height:233px;" src="{{parik.thumbnail.url}}" class="thumbnail"></a>
-			{%endif%}
                  <div class="flex-div">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
-			    <p>{{parik.user.username|title}}</p>
+			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
+			    <p><b>By:</b> {{parik.user.username|title}}</p>
 			    <p> {% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
                     </div>
                  </div>
@@ -41,6 +38,52 @@
 
 	     {% show_more "Load More"%}
         </div>
+</div>
+<div class="flex-div">
+        <div class="list-container endless_container ">
+	<h4 class="headings"> Trending Today </h4>
+		{%paginate 8 pariks%}
+		{%for parik in pariks%}
+		<div class="vid-list">
+                 <div class="flex-div">
+			 <img src="{{parik.user.channel.thumbnail.url}}">
+                    <div class="vid-info">
+			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
+			    <p><b>By:</b> {{parik.user.username|title}}</p>
+			    <p> {% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
+                    </div>
+                 </div>
+             </div >
+	     {%endfor%}
+
+	     {% show_more "Load More"%}
+        </div>
+</div>
+<div class="flex-div">
+        <div class="list-container endless_container ">
+	<h4 class="headings"> Trending Today </h4>
+		{%paginate 8 pariks%}
+		{%for parik in pariks%}
+		<div class="vid-list">
+                 <div class="flex-div">
+			 <img src="{{parik.user.channel.thumbnail.url}}">
+                    <div class="vid-info">
+			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
+			    <p><b>By:</b> {{parik.user.username|title}}</p>
+			    <p> {% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
+                    </div>
+                 </div>
+             </div >
+	     {%endfor%}
+
+	     {% show_more "Load More"%}
+        </div>
+</div>
+</div>
+
+
 
 	{%endblock%}
 
