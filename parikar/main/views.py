@@ -16,6 +16,7 @@ import base64
 from django.core.files.base import ContentFile
 import random
 import string
+from django.contrib import messages
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
@@ -175,8 +176,15 @@ def instant_video(request,extra_context=None,template="play-video.html"):
         except: #InstantParik.DoesNotExist:
             downloaded = trafilatura.fetch_url(url)
             text = trafilatura.extract(downloaded,include_comments=False)
-            metadata = trafilatura.extract_metadata(downloaded)
-            title = metadata.title
+            try:
+                metadata = trafilatura.extract_metadata(downloaded)
+                title = metadata.title
+            except:
+                metadata = None
+                title = url
+            if not text:
+                messages.add_message(request, messages.INFO,"Error fetching data")
+                return HttpResponseRedirect("/play/instant/")
             try:
                 if request.user.is_authenticated:
                     instant = InstantParik(user=request.user,url=url,content=text,description=url,tags="",title=metadata.title)
