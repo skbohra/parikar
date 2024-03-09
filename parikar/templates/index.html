@@ -24,14 +24,13 @@
     <input class="state" type="radio" title="tab-three" name="tabs-state" id="tab-three" />
 
     <div class="tabs flex-tabs">
-        <label for="tab-one" id="tab-one-label" class="tab">Trending Today</label>
-        <label for="tab-two" id="tab-two-label" class="tab">Popular Posts</label>
-        <label for="tab-three" id="tab-three-label" class="tab">Your stuff</label>
+	    <label for="tab-one" id="tab-one-label" class="tab"><i class="iconoir-stat-up"></i>&nbsp;Trending Today</label>
+	    <label for="tab-two" id="tab-two-label" class="tab"><i class="iconoir-globe"></i>&nbsp;Popular Posts</label>
+	    <label for="tab-three" id="tab-three-label" class="tab"><i class="iconoir-home-user"></i>&nbsp;Your stuff</label>
 
 
       <div id="tab-one-panel" class="panel active">
       <div class="list-container endless_container ">
-		{%paginate 8 pariks%}
 		{%for parik in pariks%}
 		<div class="vid-list">
                  <div class="flex-div vid-content">
@@ -46,15 +45,31 @@
              </div >
 	     {%endfor%}
 
-	     {% show_more "Load More"%}
         </div>
 
 
+	     <div class="pagination">
+    <span class="step-links">
+        {% if pariks.has_previous %}
+            <a href="?page=1&tab=trending">&laquo; first</a>
+            <a href="?page={{ pariks.previous_page_number }}&tab=trending">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pariks.number }} of {{ pariks.paginator.num_pages }}.
+        </span>
+
+        {% if pariks.has_next %}
+            <a href="?page={{ pariks.next_page_number }}&tab=trending">next</a>
+            <a href="?page={{ pariks.paginator.num_pages }}&tab=trending">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
 	</div>
         <div id="tab-two-panel" class="panel">
       <div class="list-container endless_container ">
-		{%paginate 8 popular_pariks%}
+		
 	
 		{%for parik in popular_pariks%}
 		<div class="vid-list">
@@ -70,7 +85,25 @@
              </div >
 	     {%endfor%}
 
-	     {% show_more "Load More"%}
+	     <div class="pagination">
+    <span class="step-links">
+        {% if popular_pariks.has_previous %}
+            <a href="?popular=1&tab=popular">&laquo; first</a>
+            <a href="?popular={{ popular_pariks.previous_page_number }}&tab=popular">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ popular_pariks.number }} of {{ popular_pariks.paginator.num_pages }}.
+        </span>
+
+        {% if popular_pariks.has_next %}
+            <a href="?popular={{ popular_pariks.next_page_number }}&tab=popular">next</a>
+            <a href="?popular={{ popular_pariks.paginator.num_pages }}&tab=popular">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+	    
         </div>
 
 
@@ -79,7 +112,6 @@
         <div id="tab-three-panel" class="panel">
       
 <div class="list-container endless_container ">
-		{%paginate 8 your_pariks%}
 		{%for parik in your_pariks%}
 		<div class="vid-list">
                  <div class="flex-div vid-content">
@@ -94,8 +126,27 @@
              </div >
 	     {%endfor%}
 
-	     {% show_more "Load More"%}
-        </div>
+       
+	     <div class="pagination">
+    <span class="step-links">
+        {% if your_pariks.has_previous %}
+            <a href="?your=1&tab=your">&laquo; first</a>
+            <a href="?your={{ your_pariks.previous_page_number }}&tab=your">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ your_pariks.number }} of {{ your_pariks.paginator.num_pages }}.
+        </span>
+
+        {% if your_pariks.has_next %}
+            <a href="?your={{ your_pariks.next_page_number }}&tab=your">next</a>
+            <a href="?your={{ your_pariks.paginator.num_pages }}&tab=your">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+</div>
 
 
 

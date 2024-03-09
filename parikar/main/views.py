@@ -22,8 +22,8 @@ DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
 
 @login_required
-@page_template('homepage_videos_list.html')  # just add this decorator
-def index(request,extra_context=None,template="index.html"):
+def index(request):
+    template = "index.html"
     subscribed_channels = []
     if request.user.is_authenticated:
         subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
@@ -33,9 +33,19 @@ def index(request,extra_context=None,template="index.html"):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    popular_pariks = Parik.objects.all().order_by('id')
+    paginator = Paginator(popular_pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("popular")
+    popular_obj = paginator.get_page(page_number)
+
+    your_pariks = Parik.objects.filter(user=request.user).order_by('id')
+    paginator = Paginator(your_pariks, 10)  # Show 25 contacts per page.
+    page_number = request.GET.get("your")
+    your_obj = paginator.get_page(page_number)
 
 
-    context = {'pariks':page_obj,'popular_pariks':page_obj,'your_pariks':page_obj,'subscribed_channels':subscribed_channels}
+    context = {'pariks':page_obj,'popular_pariks':popular_obj,'your_pariks':your_obj,'subscribed_channels':subscribed_channels}
+    
     return render(request, template, context)
 
 @page_template('videos_list.html')  # just add this decorator
@@ -96,7 +106,7 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     hit_count_response = HitCountMixin.hit_count(request, hit_count)
 
     pariks = Parik.objects.all().exclude(id=id).order_by('-id')
-    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+    paginator = Paginator(pariks, 5)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 

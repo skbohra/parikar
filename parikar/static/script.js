@@ -29,4 +29,20 @@ $(".search-button").click(function(){
 	$(".search-form").submit();
 });
 
+var url = window.location;
+const params = new URLSearchParams(url.search);
+
+if(params.has("trending")){
+	$("#tab-one").attr("checked","checked");
+}
+if(params.has("popular")){
+	$("#tab-two").attr("checked","checked");
+}
+if(params.has("your")){
+	$("#tab-three").attr("checked","checked");
+}
+
+
+
+
 });
