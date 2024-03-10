@@ -17,6 +17,7 @@ from django.core.files.base import ContentFile
 import random
 import string
 from django.contrib import messages
+from itertools import chain
 
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
@@ -38,8 +39,12 @@ def index(request):
     page_number = request.GET.get("popular")
     popular_obj = paginator.get_page(page_number)
 
-    your_pariks = Parik.objects.filter(user=request.user).order_by('id')
-    paginator = Paginator(your_pariks, 10)  # Show 25 contacts per page.
+    your_instant_pariks = InstantParik.objects.filter(user=request.user).exclude(is_user_saved=False).order_by('-id')
+    your_pariks = Parik.objects.filter(user=request.user).order_by('-id')
+    
+    your_posts  = list(chain(your_instant_pariks, your_pariks))
+
+    paginator = Paginator(your_posts, 10)  # Show 25 contacts per page.
     page_number = request.GET.get("your")
     your_obj = paginator.get_page(page_number)
 
