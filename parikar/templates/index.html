@@ -84,7 +84,7 @@
                  </div>
              </div >
 	     {%endfor%}
-
+      </div>
 	     <div class="pagination">
     <span class="step-links">
         {% if popular_pariks.has_previous %}
@@ -102,10 +102,6 @@
         {% endif %}
     </span>
 </div>
-
-	    
-        </div>
-
 
 
 	</div>
@@ -126,6 +122,7 @@
              </div >
 	     {%endfor%}
 
+             </div >
        
 	     <div class="pagination">
     <span class="step-links">
@@ -143,7 +140,6 @@
             <a href="?your={{ your_pariks.paginator.num_pages }}&tab=your">last &raquo;</a>
         {% endif %}
     </span>
-</div>
 
 
 </div>

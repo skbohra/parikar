@@ -34,6 +34,7 @@ def index(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    hitcounts = HitCount.objects.filter(content_type=ContentType.objects.get_for_model(Parik),hits__gte=2)
     popular_pariks = Parik.objects.all().order_by('id')
     paginator = Paginator(popular_pariks, 10)  # Show 25 contacts per page.
     page_number = request.GET.get("popular")
