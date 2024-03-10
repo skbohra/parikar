@@ -61,14 +61,18 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     #print(keywords)
     tags = parik.tags.split(" ")
     if not parik.thumbnail:
-        api_key = ServiceAPI.objects.get(service_name="stability")
-        data = stability_text_to_image(parik.title,api_key)
+        try:
+            api_key = ServiceAPI.objects.get(service_name="stability")
+            data = stability_text_to_image(parik.title,api_key)
         
-        for i, image in enumerate(data["artifacts"]):
-            data = ContentFile(base64.b64decode(image["base64"])) 
-            uuid = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
-            file_name = api_key.service_name+"_generated_"+ uuid + ".png"
-            parik.thumbnail.save(file_name, data, save=True)
+            for i, image in enumerate(data["artifacts"]):
+                data = ContentFile(base64.b64decode(image["base64"])) 
+                uuid = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+                file_name = api_key.service_name+"_generated_"+ uuid + ".png"
+                parik.thumbnail.save(file_name, data, save=True)
+        except Exception as e:
+            print(e)
+
     if parik.to_wrap:
         lines = []
         #new_lines = parik.content.split(".")
