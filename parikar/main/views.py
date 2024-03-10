@@ -40,9 +40,8 @@ def index(request):
     page_number = request.GET.get("popular")
     popular_obj = paginator.get_page(page_number)
 
-    your_instant_pariks = InstantParik.objects.filter(user=request.user).exclude(is_user_saved=False).order_by('-id')
+    your_instant_pariks = InstantParik.objects.filter(user=request.user,is_user_saved=False).order_by('-id')
     your_pariks = Parik.objects.filter(user=request.user).order_by('-id')
-    
     your_posts  = list(chain(your_instant_pariks, your_pariks))
 
     paginator = Paginator(your_posts, 10)  # Show 25 contacts per page.
@@ -56,6 +55,12 @@ def index(request):
 
 @page_template('videos_list.html')  # just add this decorator
 def single_video(request,id=id,extra_context=None,template="play-video.html"):
+    try:
+        ctype = request.GET['type']
+        if ctype == "instant_parik":
+            return HttpResponseRedirect(reverse("instant_video")+"?id="+str(id))
+    except KeyError:
+        pass
     parik = get_object_or_404(Parik,id=id)
     #keywords = extract_keywords_bert(parik.content)
     #print(keywords)
@@ -187,12 +192,20 @@ import trafilatura
 @page_template('videos_list.html')  # just add this decorator
 def instant_video(request,extra_context=None,template="play-video.html"):
     url = request.GET.get("url", None)
-    if not url:
+    try:
+        id = request.GET['id']
+    except:
+        id = None
+    if not url and not id:
         return render(request,'instant-url.html')
     else:
 
         try:
-            instant = InstantParik.objects.get(url=url)
+            if id:
+                instant = InstantParik.objects.get(id=id)
+                url = instant.url
+            else:
+                instant = InstantParik.objects.get(url=url)
             text = instant.content
             title = instant.title
         except: #InstantParik.DoesNotExist:

@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {%load static%}
+{%load content_type%}
 {% load hitcount_tags %}
 {% load el_pagination_tags %}
 {%block content%}
@@ -113,7 +114,9 @@
                  <div class="flex-div vid-content">
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
-			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
+			    {% with parik|content_type as ctype %}
+			    <a href="{%url 'single_video' parik.id %}?type={{ctype}}">{{parik.title}}</a>
+			    {%endwith%}
 			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
 			    <p><b>By:</b> {{parik.user.username|title}}</p>
 			    <p> {% get_hit_count for parik %} Views &bull; {{parik.created_on|timesince}} ago</p>
