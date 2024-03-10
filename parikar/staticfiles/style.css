@@ -39,7 +39,7 @@ nav{
     margin-right: 25px;
 }
 .nav-left .logo{
-    width: 200px;
+    width: 85px;
 }
 .nav-middle .mic-icon{
     width: 16px;
@@ -202,7 +202,7 @@ nav{
         display: none;
     }
     .logo{
-        width: 90px;
+        width: 85px;
     }
     
 }
