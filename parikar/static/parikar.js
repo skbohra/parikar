@@ -1,5 +1,5 @@
 
-function animation(parik){
+function animation(parik,record_view_url){
 gsap.registerPlugin(MotionPathPlugin, EasePack);
 //gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
 
@@ -158,6 +158,11 @@ tl.eventCallback("onUpdate", function() {
 
   var time_elapsed = new Date(tl.totalTime() * 1000).toISOString().slice(11, 19);
   $(".time-elapsed").text(time_elapsed);
+  if (parseInt(tl.progress()*100.00) % 10 == 0){
+  	var url = record_view_url + "&progress=" + tl.progress()*100.00;
+  }
+  $.get(url,function(response){
+  });
 
 });
 tl.eventCallback("onComplete", function() {

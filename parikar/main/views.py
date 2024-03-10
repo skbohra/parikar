@@ -124,8 +124,8 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     paginator = Paginator(pariks, 5)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-
-    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+    record_view_url = reverse("record_post_view", args=[parik.id]) + "?ctype=" + "parik" 
+    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url}
     return render(request, template, context)
 
 @login_required
@@ -263,7 +263,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             pass
         tags = None
         is_subscribed = None
-        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+        record_view_url = reverse("record_post_view", args=[instant.id]) + "?ctype=" + "instant" 
+        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url}
         return render(request, template, context)
 
 @login_required
@@ -316,3 +317,19 @@ def save_instant(request,id):
     return HttpResponseRedirect(reverse("single_video", args=[instant.parik.id])) 
 
 
+@login_required
+def record_post_view(request,id):
+    ctype = request.GET['ctype']
+    progress = request.GET['progress']
+    if ctype == "parik":
+        obj = Parik.objects.get(pk=id)
+    else:
+        obj = InstantParik.objects.get(pk=id)
+    try:
+        post_view = obj.post_view_stat.get(user=request.user)
+        post_view.view_progress = progress
+        post_view.save()
+    except PostViewStat.DoesNotExist:
+        post_view = PostViewStat(content_object=obj,user=request.user,view_progress=progress)
+        post_view.save()
+    return JsonResponse({"message":"progress_recorded"})
