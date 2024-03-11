@@ -199,16 +199,17 @@ import trafilatura
 @page_template('videos_list.html')  # just add this decorator
 def instant_video(request,extra_context=None,template="play-video.html"):
     url = request.GET.get("url", None)
-    try:
-        channel = request.user.channel
-    except: #User.Channel.DoesNotExist:
-        messages.add_message(request, messages.INFO,"Please update your profile first!")
-        if url:
-            next_url = reverse("instant_video")+"?url="+url
-        else:
-            next_url = reverse("instant_video")
+    if request.user.is_authenticated:
+        try:
+            channel = request.user.channel
+        except: #User.Channel.DoesNotExist:
+            messages.add_message(request, messages.INFO,"Please update your profile first!")
+            if url:
+                next_url = reverse("instant_video")+"?url="+url
+            else:
+                next_url = reverse("instant_video")
 
-        return HttpResponseRedirect(reverse("new_channel")+"?next="+next_url) 
+            return HttpResponseRedirect(reverse("new_channel")+"?next="+next_url) 
 
 
     try:
