@@ -89,6 +89,7 @@ class InstantParik(models.Model):
     tags = models.TextField()
     is_user_saved = models.BooleanField(default=False)
     parik = models.ForeignKey(Parik,null=True,blank=True,on_delete=models.CASCADE)
+    post_view_stat = GenericRelation(PostViewStat)
     def get_absolute_url(self):
         return f"/play/instant/?url={self.url}/"
 
