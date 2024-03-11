@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     #'django_celery_beat',
     'el_pagination',
-    'subscriptions',
 ]
 
 MIDDLEWARE = [

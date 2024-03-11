@@ -150,21 +150,24 @@ slider.$on('change', function(e) {
 });
 */
 
+var current_progress = 0.0;
 tl.eventCallback("onUpdate", function() {
   sliderValue.value = tl.progress() * 100;
   slider.slider(sliderValue);
   //slider.$set({ values: [ tl.progress()*100 ]});
 
-
   var time_elapsed = new Date(tl.totalTime() * 1000).toISOString().slice(11, 19);
   $(".time-elapsed").text(time_elapsed);
-  if (parseInt(tl.progress()*100.00) % 10 == 0){
-  	var url = record_view_url + "&progress=" + tl.progress()*100.00;
-  }
-  $.get(url,function(response){
-  });
+  
+  if(parseInt(tl.progress()*100.00) != current_progress){
+	console.log(parseInt(tl.progress()*100.00));
+  	var url = record_view_url + "&progress=" + parseInt(tl.progress()*100.00);
+        current_progress = parseInt(tl.progress()*100.00);	
+  	$.get(url,function(response){});
 
-});
+
+  }
+  });
 tl.eventCallback("onComplete", function() {
   gsap.to(slider, 1, {autoAlpha:1});
   //replayReveal();
