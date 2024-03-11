@@ -3,7 +3,8 @@ from django.db import models
 from django.contrib.auth.models import * 
 from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 class Font(models.Model):
     font_name = models.CharField(max_length=50)
@@ -16,6 +17,20 @@ class Animation(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
+
+
+class PostViewStat(models.Model):
+    view_progress = models.FloatField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    last_viewed_time = models.DateTimeField(auto_now=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+    class Meta:
+        indexes = [
+            models.Index(fields=["content_type", "object_id"]),
+        ]
+
 class Parik(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -35,6 +50,7 @@ class Parik(models.Model):
     shuffle_fonts_by_line  = models.BooleanField(default=False)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
+    post_view_stat = GenericRelation(PostViewStat)
 
     def get_absolute_url(self):
         return f"/play/{self.id}/"
@@ -44,8 +60,8 @@ class Parik(models.Model):
 class Channel(models.Model):
     owner = models.OneToOneField(User,on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=100)
-    about = models.TextField()
-    url = models.URLField()
+    about = models.TextField(null=True,blank=True)
+    url = models.URLField(null=True,blank=True,verbose_name='Website')
     thumbnail = models.ImageField(upload_to="thumbnails")
     created_on = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
@@ -87,5 +103,4 @@ class Hope(models.Model):
     service_name = models.CharField(max_length=100)
     url = models.URLField()
     api_key = models.CharField(max_length=200)
-
 

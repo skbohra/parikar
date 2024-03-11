@@ -895,3 +895,14 @@ margin-top:20px;
 .current{
 background:#ccc;
 }
+
+
+.link{
+color:blue;
+text-decoration:underline;
+}
+
+.status{
+color:blue;
+
+}

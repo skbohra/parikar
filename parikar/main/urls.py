@@ -17,6 +17,7 @@ urlpatterns = [
     path("play/instant/", views.instant_video, name="instant_video"),
     path("channel/<int:id>/", views.channel_view, name="channel"),
     path("new/", views.add_parik, name="add_parik"),
+    path("accounts/profile/", views.new_channel, name="new_channel"),
     path("instant/save/<int:id>/", views.save_instant, name="save_instant"),
     path("search/", views.search, name="search"),
     path("explore/", views.explore, name="explore"),
@@ -27,4 +28,5 @@ urlpatterns = [
         vote_on_object,
         kwargs=widget_kwargs,
     ),
+    path("record/view_stat/<int:id>/", views.record_post_view, name="record_post_view"),
     ]

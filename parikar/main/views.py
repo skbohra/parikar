@@ -124,13 +124,20 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     paginator = Paginator(pariks, 5)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-
-    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+    record_view_url = reverse("record_post_view", args=[parik.id]) + "?ctype=" + "parik" 
+    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url}
     return render(request, template, context)
 
 @login_required
 def add_parik(request):
     form = NewParikForm()
+    try:
+        request.user.channel
+    except Exception as e:
+        next_url = reverse("add_parik")
+        messages.add_message(request, messages.INFO,"Please update your profile first!")
+        return HttpResponseRedirect(reverse("new_channel")+"?next="+next_url) 
+
     if request.method == "POST":
         form = NewParikForm(request.POST,request.FILES)
         if form.is_valid():
@@ -192,6 +199,18 @@ import trafilatura
 @page_template('videos_list.html')  # just add this decorator
 def instant_video(request,extra_context=None,template="play-video.html"):
     url = request.GET.get("url", None)
+    try:
+        channel = request.user.channel
+    except: #User.Channel.DoesNotExist:
+        messages.add_message(request, messages.INFO,"Please update your profile first!")
+        if url:
+            next_url = reverse("instant_video")+"?url="+url
+        else:
+            next_url = reverse("instant_video")
+
+        return HttpResponseRedirect(reverse("new_channel")+"?next="+next_url) 
+
+
     try:
         id = request.GET['id']
     except:
@@ -263,7 +282,8 @@ def instant_video(request,extra_context=None,template="play-video.html"):
             pass
         tags = None
         is_subscribed = None
-        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now()}
+        record_view_url = reverse("record_post_view", args=[instant.id]) + "?ctype=" + "instant" 
+        context = {'instant': True,'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url}
         return render(request, template, context)
 
 @login_required
@@ -314,5 +334,53 @@ def save_instant(request,id):
         message = {'message': 'Already Saved','type':'error','btn_text':'Saved'}
 
     return HttpResponseRedirect(reverse("single_video", args=[instant.parik.id])) 
+
+
+@login_required
+def record_post_view(request,id):
+    ctype = request.GET['ctype']
+    progress = request.GET['progress']
+    if ctype == "parik":
+        obj = Parik.objects.get(pk=id)
+    else:
+        obj = InstantParik.objects.get(pk=id)
+    try:
+        post_view = obj.post_view_stat.get(user=request.user)
+        post_view.view_progress = progress
+        post_view.save()
+    except PostViewStat.DoesNotExist:
+        post_view = PostViewStat(content_object=obj,user=request.user,view_progress=progress)
+        post_view.save()
+    return JsonResponse({"message":"progress_recorded"})
+
+@login_required
+def new_channel(request):
+    try:
+        instance = request.user.channel
+        form = NewChannelForm(instance=instance)
+    except Exception as e:
+        print(e)
+        form = NewChannelForm()
+        instance = None
+    if request.method == "POST":
+        if instance:
+            form = NewChannelForm(data=request.POST,files=request.FILES,instance=instance)
+        else:
+            form = NewChannelForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            channel = form.save(commit=False)
+            channel.owner = request.user
+            channel.created_on = datetime.datetime.now()
+            channel.is_active = True
+            channel.save()
+            messages.add_message(request, messages.SUCCESS,"Profile Updated!")
+            if request.GET.get("next"):
+                return redirect(request.GET.get('next'))
+            else:
+                return HttpResponseRedirect("/") 
+
+    context = {'form':form}
+    return render(request, "new-channel.html", context)
+
 
 
