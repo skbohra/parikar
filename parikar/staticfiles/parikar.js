@@ -13,9 +13,10 @@ var tl = new TimelineLite({
 				tl.restart();
 			}
 		});
- 
-TweenLite.to(tl, 1, {progress: view_progress/10.0, ease: Linear.easeNone});
 
+if(view_progress != 10.0){
+	TweenLite.to(tl, 1, {progress: view_progress/10.0, ease: Linear.easeNone});
+}
 TweenLite.defaultEase = Circ.easeInOut;
 
 var time = 0.9;
