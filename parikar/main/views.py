@@ -125,7 +125,11 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     record_view_url = reverse("record_post_view", args=[parik.id]) + "?ctype=" + "parik" 
-    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url}
+    try:
+        view_progress = parik.post_view_stat.get(user=request.user).view_progress
+    except:
+        view_progress = 0.0
+    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url,'view_progress':view_progress}
     return render(request, template, context)
 
 @login_required

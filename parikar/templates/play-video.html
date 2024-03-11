@@ -163,7 +163,7 @@ display:none;
     <script src="{%static "script.js"%}"></script>
     <script>
        $(function(){
-	 animation("{{parik.animation.name}}","{{record_view_url}}");
+			   animation("{{parik.animation.name}}","{{record_view_url}}","{{view_progress}}");
 	 $('#comment-form').ajaxForm(function() { 
 		$("#id_comment").notify("Comment posted!","success");
 	  }); 

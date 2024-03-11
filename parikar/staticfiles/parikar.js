@@ -1,5 +1,6 @@
 
-function animation(parik,record_view_url){
+function animation(parik,record_view_url,view_progress){
+view_progress = parseInt(view_progress)/10.0;
 gsap.registerPlugin(MotionPathPlugin, EasePack);
 //gsap.registerPlugin(MotionPathPlugin, SplitText, Physics2DPlugin, ScrambleTextPlugin, EasePack)
 
@@ -13,6 +14,8 @@ var tl = new TimelineLite({
 			}
 		});
  
+TweenLite.to(tl, 1, {progress: view_progress/10.0, ease: Linear.easeNone});
+
 TweenLite.defaultEase = Circ.easeInOut;
 
 var time = 0.9;
