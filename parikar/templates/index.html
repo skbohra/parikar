@@ -81,10 +81,7 @@
 			 <img src="{{parik.user.channel.thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
-				     {% for entry in parik.post_view_stat.all %}
-				      <p class="status"> <i class="iconoir-page-edit"></i> Read: {{entry.view_progress|floatformat:1}} %</p>
-				      {%empty%}<p class="status"> <i class="iconoir-page-edit"></i> Read: 0.0 %</p>
-				      {%endfor%}
+			    <p class="status"> <i class="iconoir-page-edit"></i> Read: {{parik|get_progress:request.user|floatformat:1}} %</p>
 
 			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
 			    <p><b>By:</b> {{parik.user.username|title}}</p>
@@ -130,10 +127,7 @@
                     <div class="vid-info">
 			    {% with parik|content_type as ctype %}
 			    <a href="{%url 'single_video' parik.id %}?type={{ctype}}">{{parik.title}}</a> 
-			              {% for entry in parik.post_view_stat.all %}
-				      <p class="status"> <i class="iconoir-page-edit"></i> Read: {{entry.view_progress|floatformat:1}} %</p>
-				      {%empty%}<p class="status"> <i class="iconoir-page-edit"></i> Read: 0.0 %</p>
-				      {%endfor%}
+			    <p class="status"> <i class="iconoir-page-edit"></i> Read: {{parik|get_progress:request.user|floatformat:1}} %</p>
 			    {%endwith%}
 			    {%if parik.description%} <p> {{parik.description}}</p> {%endif%}
 			    <p><b>By:</b> {{parik.user.username|title}}</p>
