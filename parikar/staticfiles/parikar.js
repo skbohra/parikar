@@ -16,7 +16,9 @@ var tl = new TimelineLite({
 
 if(view_progress != 10.0){
 	TweenLite.to(tl, 1, {progress: view_progress/10.0, ease: Linear.easeNone});
+	$.notify("Fast forwarding to where you left","info");
 }
+
 TweenLite.defaultEase = Circ.easeInOut;
 
 var time = 0.9;
