@@ -36,7 +36,7 @@
 		{%for parik in pariks%}
 		<div class="vid-list">
                  <div class="flex-div vid-content">
-			 <img src="{{parik.user.channel.thumbnail.url}}">
+			 <img src="{{parik.user.channel.small_thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
 			    <p class="status"> <i class="iconoir-page-edit"></i> Read: {{parik|get_progress:request.user|floatformat:1}} %</p>
@@ -83,7 +83,7 @@
 		{%for parik in popular_pariks%}
 		<div class="vid-list">
                  <div class="flex-div vid-content">
-			 <img src="{{parik.user.channel.thumbnail.url}}">
+			 <img src="{{parik.user.channel.small_thumbnail.url}}">
                     <div class="vid-info">
 			    <a href="{%url 'single_video' parik.id %}">{{parik.title}}</a>
 			    <p class="status"> <i class="iconoir-page-edit"></i> Read: {{parik|get_progress:request.user|floatformat:1}} %</p>
@@ -128,7 +128,7 @@
 		{%for parik in your_pariks%}
 		<div class="vid-list">
                  <div class="flex-div vid-content">
-			 <img src="{{parik.user.channel.thumbnail.url}}">
+			 <img src="{{parik.user.channel.small_thumbnail.url}}">
                     <div class="vid-info">
 			    {% with parik|content_type as ctype %}
 			    <a href="{%url 'single_video' parik.id %}?type={{ctype}}">{{parik.title}}</a> 

@@ -84,7 +84,7 @@ display:none;
                 </div>
                 <hr>
                 <div class="publisher">
-			 <img src="{{parik.user.channel.thumbnail.url}}">
+			 <img src="{{parik.user.channel.small_thumbnail.url}}">
                     <div>
 			    {%if not instant %}   <p><a href="{%url 'channel' parik.user.channel.id %}">{{parik.user.channel.channel_name|title}}</a></p>
 			    <span>{{parik.user.channel.subscribers}} Subscribers</span>
@@ -125,8 +125,8 @@ display:none;
 		    {% lazy_paginate 5 pariks %}
 		    {%for parik in pariks%}
 	     	    <div class="side-video-list">
-			    {%if parik.thumbnail%}
-			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="{{parik.thumbnail.url}}"></a>
+			    {%if parik.small_thumbnail%}
+			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="{{parik.small_thumbnail.url}}"></a>
 			    {%else%}
 			    <a href="{%url 'single_video' parik.id%}" class="small-thumbnail"><img src="https://source.unsplash.com/random?{{parik.title}}"></a>
 			    {%endif%}

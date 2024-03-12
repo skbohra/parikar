@@ -5,6 +5,13 @@ from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from PIL import Image 
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from mimetypes import guess_type
+import os
+
+from django.core.files.base import ContentFile
 
 class Font(models.Model):
     font_name = models.CharField(max_length=50)
@@ -63,6 +70,7 @@ class Channel(models.Model):
     about = models.TextField(null=True,blank=True)
     url = models.URLField(null=True,blank=True,verbose_name='Website')
     thumbnail = models.ImageField(upload_to="thumbnails")
+    small_thumbnail = models.ImageField(upload_to="small_thumbnails",null=True,blank=True)
     created_on = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     
@@ -70,7 +78,39 @@ class Channel(models.Model):
     def subscribers(self):
         subscribers = ChannelSubscriber.objects.filter(channel=self,is_active=True).count()
         return subscribers
+    def create_channel_thumbnail(self):
+        image = Image.open(self.thumbnail)
+        image.thumbnail((64,64), Image.ANTIALIAS)
 
+        thumb_name, thumb_extension = os.path.splitext(self.thumbnail.name)
+        thumb_extension = thumb_extension.lower()
+
+        thumb_filename = thumb_name + '_thumb' + thumb_extension
+
+        if thumb_extension in ['.jpg', '.jpeg']:
+            FTYPE = 'JPEG'
+        elif thumb_extension == '.gif':
+            FTYPE = 'GIF'
+        elif thumb_extension == '.png':
+            FTYPE = 'PNG'
+        else:
+            return False    # Unrecognized file type
+
+        # Save thumbnail to in-memory file as StringIO
+        temp_thumb = BytesIO()
+        image.save(temp_thumb, FTYPE)
+        temp_thumb.seek(0)
+
+        # set save=False, otherwise it will run in an infinite loop
+        self.small_thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
+        temp_thumb.close()
+
+        return True
+
+
+    def save(self, *args, **kwargs):
+        self.create_channel_thumbnail()
+        return super().save(*args, **kwargs)
 
 class ChannelSubscriber(models.Model):
     channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
@@ -104,4 +144,6 @@ class Hope(models.Model):
     service_name = models.CharField(max_length=100)
     url = models.URLField()
     api_key = models.CharField(max_length=200)
+
+
 

@@ -9,4 +9,4 @@ class NewParikForm(ModelForm):
 class NewChannelForm(ModelForm):
     class Meta:
         model = Channel
-        exclude = ["owner","created_on","is_active"]
+        exclude = ["owner","created_on","is_active","small_thumbnail"]
