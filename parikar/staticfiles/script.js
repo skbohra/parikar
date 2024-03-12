@@ -36,5 +36,20 @@ if(params.has("your")){
 
 
 
+$(".subscribe-channel").click(function(e){
+	var button = $(this);
+	e.preventDefault();
+	var url = $(this).data('url');
+	$.get(url,function(response){
+	$(button).notify(response.message,response.type);
+	if(response.type == "success"){
+		$(button).toggleClass("btn-disabled").text(response.btn_text);
+	}
+	});
+});
+
+
+
+
 
 });

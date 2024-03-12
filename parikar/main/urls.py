@@ -29,4 +29,5 @@ urlpatterns = [
         kwargs=widget_kwargs,
     ),
     path("record/view_stat/<int:id>/", views.record_post_view, name="record_post_view"),
+    path("channels/", views.channels, name="channels"),
     ]

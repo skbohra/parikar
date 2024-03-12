@@ -68,7 +68,7 @@ class Channel(models.Model):
     
     @property
     def subscribers(self):
-        subscribers = ChannelSubscriber.objects.filter(id=self.id,is_active=True).count()
+        subscribers = ChannelSubscriber.objects.filter(channel=self,is_active=True).count()
         return subscribers
 
 

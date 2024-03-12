@@ -240,26 +240,6 @@ $(".video-control-pause").click();
 
 
 
-$(function(){
-
-
-$(".subscribe-channel").click(function(e){
-
-	e.preventDefault();
-	var url = $(this).data('url');
-	$.get(url,function(response){
-	$(".subscribe-channel").notify(response.message,response.type);
-	if(response.type == "success"){
-		$(".subscribe-channel").toggleClass("btn-disabled").text(response.btn_text);
-	}
-	});
-});
-
-
-
-});
-
-
 
 }
 

@@ -27,15 +27,16 @@ def index(request):
     template = "index.html"
     subscribed_channels = []
     if request.user.is_authenticated:
-        subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user)
-
-    pariks = Parik.objects.all().order_by('-id')
+        subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user,is_active=True).values('channel__owner')
+    print(subscribed_channels)
+    pariks = Parik.objects.filter(user__in=subscribed_channels).order_by('-id')
     paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     hitcounts = HitCount.objects.filter(content_type=ContentType.objects.get_for_model(Parik),hits__gte=2)
-    popular_pariks = Parik.objects.all().order_by('id')
+    
+    popular_pariks = Parik.objects.all().order_by('-id')
     paginator = Paginator(popular_pariks, 10)  # Show 25 contacts per page.
     page_number = request.GET.get("popular")
     popular_obj = paginator.get_page(page_number)
@@ -180,7 +181,7 @@ def subscribe_channel(request,id):
                 channel_subscriber.is_active = True
                 channel_subscriber.save()
                 message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subscribed'}
-        except ChannelSubscriber.DoesNotExist:
+        except ChannelSubscriber.DoesNotExist as e:
             channel_subscriber = ChannelSubscriber(channel=channel,subscriber=request.user,is_active=True)
             channel_subscriber.save()
             message = {'message': 'Channel Subscribed','type':'success','btn_text':'Subscribed'}
@@ -388,4 +389,9 @@ def new_channel(request):
     return render(request, "new-channel.html", context)
 
 
+@login_required
+def channels(request):
+    channels = Channel.objects.filter(is_active=True)
+    context = {"channels":channels}
+    return render(request, "channels.html", context)
 

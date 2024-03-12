@@ -878,6 +878,11 @@ float:left;
   #tab-four:checked ~ .tabs #tab-four-panel{
     border-bottom: 1px solid #ccc;
   }
+
+.empty-message{
+max-width:300px;
+padding-bottom:20px;
+}
 }
 
 .search-container{
@@ -905,4 +910,9 @@ text-decoration:underline;
 .status{
 color:blue;
 
+}
+
+
+.empty-message{
+padding-bottom:20px;
 }
