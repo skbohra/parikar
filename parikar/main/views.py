@@ -1,5 +1,5 @@
 from django.shortcuts import *
-from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse,Http404
 from django.urls import reverse
 import textwrap
 from .models import * 
@@ -394,4 +394,30 @@ def channels(request):
     channels = Channel.objects.filter(is_active=True)
     context = {"channels":channels}
     return render(request, "channels.html", context)
+
+
+@login_required
+def edit_parik(request,id):
+    instance = get_object_or_404(Parik,id=id)
+    form = NewParikForm(instance=instance)
+    if not instance.user == request.user:
+        raise Http404
+    
+    if request.method == "POST":
+        if instance:
+            form = NewParikForm(data=request.POST,files=request.FILES,instance=instance)
+        else:
+            form = NewParikForm(data=request.POST,files=request.FILES)
+        if form.is_valid():
+            parik = form.save()
+            messages.add_message(request, messages.SUCCESS,"Post Updated!")
+            if request.GET.get("next"):
+                return redirect(request.GET.get('next'))
+            else:
+                return HttpResponseRedirect(reverse("single_video", args=[instance.id])) 
+
+    context = {'form':form}
+    return render(request, "edit-parik.html", context)
+
+
 

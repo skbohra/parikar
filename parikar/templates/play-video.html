@@ -66,7 +66,7 @@ display:none;
 			{%endfor%} 
                 </div>
 		<br>
-		<h3 class="inline">{{parik.title}} </h3>
+		<h3 class="inline">{{parik.title}} </h3>{%if user == parik.user%} {%if not instant%} <a href="{%url 'edit_post'  parik.id %}">Edit </a> {%endif%} {%endif%}
 		<button  style="margin-left:10px;" class="button inline float-right" data-sharer="twitter" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-twitter"></i> Share on X</button>&nbsp;&nbsp;
 		<button  class="button inline float-right" data-sharer="facebook" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-facebook"></i>Share on FB</button>
 
