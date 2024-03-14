@@ -77,3 +77,4 @@ wcwidth==0.2.13
 whitenoise==6.6.0
 django-gamification==0.3.2
 django-flexible-subscriptions
+ai21>=2
