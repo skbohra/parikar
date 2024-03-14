@@ -58,7 +58,7 @@ class Parik(models.Model):
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     post_view_stat = GenericRelation(PostViewStat)
-
+    summary = models.TextField(null=True,blank=True)
     def get_absolute_url(self):
         return f"/play/{self.id}/"
 

@@ -19,6 +19,9 @@ import string
 from django.contrib import messages
 from itertools import chain
 
+from ai21 import AI21Client
+from ai21.models import DocumentType
+
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
 
@@ -78,18 +81,44 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
                 parik.thumbnail.save(file_name, data, save=True)
         except Exception as e:
             print(e)
+    content = parik.content
+    summarize = False
+    if request.GET.get('summarize'):
+
+        if parik.summary:
+            content = parik.summary 
+            summarize = True
+        else:
+
+            api_key = ServiceAPI.objects.get(service_name="ai21")
+
+            client = AI21Client(api_key=api_key.api_key)
+            try:
+                api_response = client.summarize.create(
+                source=parik.content,
+                source_type=DocumentType.TEXT, 
+                )
+                summary = api_response.summary
+                parik.summary = summary
+                parik.save()
+                content = summary
+                messages.add_message(request, messages.INFO, "Showing Summarized by AI content")
+                summarize = True
+            except Exception as e:
+                messages.add_message(request, messages.INFO, e)
+                content = parik.content
 
     if parik.to_wrap:
         lines = []
         #new_lines = parik.content.split(".")
-        new_lines = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', parik.content)
+        new_lines = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', content)
 
         for line in new_lines:
             new_line = textwrap.wrap(line,width=50)
             lines = lines + new_line
 
     else:
-        lines = parik.content.strip().split("\n")
+        lines = content.strip().split("\n")
 
     alldata = []
 
@@ -127,10 +156,13 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     page_obj = paginator.get_page(page_number)
     record_view_url = reverse("record_post_view", args=[parik.id]) + "?ctype=" + "parik" 
     try:
-        view_progress = parik.post_view_stat.get(user=request.user).view_progress
+        if request.GET.get('summarize'):
+            view_progress = 0.0
+        else:
+            view_progress = parik.post_view_stat.get(user=request.user).view_progress
     except:
         view_progress = 0.0
-    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url,'view_progress':view_progress}
+    context = {'parik':parik,'tags':tags,'lines':alldata,'pariks':page_obj,'is_subscribed':is_subscribed,'now':datetime.datetime.now(),'record_view_url':record_view_url,'view_progress':view_progress,'summarize':summarize}
     return render(request, template, context)
 
 @login_required

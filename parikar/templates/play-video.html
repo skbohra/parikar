@@ -59,20 +59,25 @@ display:none;
 		</div>
 
 		</div>
-
+		<br>
                 <div class="tags">
 			{%for tag in tags%}	
 			<a href="/search/?query={{tag}}">{{tag}}</a> 
 			{%endfor%} 
+			{%if not instant%}
+			<center>{%if  not summarize %} <a class="link-btn" href="{%url 'single_video' parik.id %}?summarize=true">Summarize with AI</a> {%else%} <a class="link-btn" href="{%url 'single_video' parik.id %}">Show Original</a>{%endif%}	
+			</center>
+			{%else%}
+			<center> <span style="">Save Post To Summarize with AI </span> </center>{%endif%}
                 </div>
 		<br>
 		<h3 class="inline">{{parik.title}} </h3>{%if user == parik.user%} {%if not instant%} <a href="{%url 'edit_post'  parik.id %}">Edit </a> {%endif%} {%endif%}
+
 		<button  style="margin-left:10px;" class="button inline float-right" data-sharer="twitter" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-twitter"></i> Share on X</button>&nbsp;&nbsp;
 		<button  class="button inline float-right" data-sharer="facebook" data-title="{{parik.title}} - Reading on Parikar"  data-url="https://parikar.org{{parik.get_absolute_url}}"><i class="iconoir-facebook"></i>Share on FB</button>
 
-
-		<br>	
-		{%if user.is_authenticated%}{%if instant%} {%if user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
+		<br>
+			{%if user.is_authenticated%}{%if instant%} {%if user == parik.user%} <br> <a href="{%url 'save_instant' parik.instant.id %}" class="button save-instant"> Save as Post </a> {%endif%}<br>{%endif%}{%endif%} 
 		{%if parik.description%} <br> <p>{{parik.description|urlize}}</p>	{%endif%}
                 <div class="play-video-info">
 			<p> {%if not instant %} {% get_hit_count for parik %} Views &bull;{%endif%} {{parik.created_on|timesince}} ago</p>
