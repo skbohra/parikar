@@ -36,7 +36,7 @@ function animation(parik,record_view_url,view_progress){
 			}
 		});
 	//Seeking the timeline to the position where user left 
-	if(view_progress != 10.0){
+	if(view_progress != 10.0 && view_progress != 0){
 		TweenLite.to(tl, 1, {progress: view_progress/10.0, ease: Linear.easeNone});
 		// from notify.js for alert popups
 		$.notify("Fast forwarding to where you left","info");
@@ -225,7 +225,6 @@ function animation(parik,record_view_url,view_progress){
 	});
 	*/
 
-	/*	
 	$(".line-comment").on("click",function(e) {
 	if ($(this).css('opacity') == 1) {
 		e.stopPropagation()
@@ -261,7 +260,6 @@ function animation(parik,record_view_url,view_progress){
 		}
 		);
 
-	*/
 
 
 }

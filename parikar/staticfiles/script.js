@@ -29,7 +29,7 @@ $(function(){
 
 	//search-button to submit form 
 	$(".search-button").click(function(e){
-		$(this).parent().submit();
+		$(".search-form").submit();
 	});
 
 
