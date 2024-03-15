@@ -21,15 +21,25 @@
 </div>
         <div class="worko-tabs">
   
+    {%if user.is_authenticated%}
     <input class="state" type="radio" title="tab-one" name="tabs-state" id="tab-one" checked />
     <input class="state" type="radio" title="tab-two" name="tabs-state" id="tab-two" />
     <input class="state" type="radio" title="tab-three" name="tabs-state" id="tab-three" />
+    {%else%}
+    <input class="state" type="radio" title="tab-two" name="tabs-state" id="tab-two" checked/>
+    <input class="state" type="radio" title="tab-three" name="tabs-state" id="tab-three" />
 
-    <div class="tabs flex-tabs">
+    {%endif%}
+        <div class="tabs flex-tabs">
+    	{%if user.is_authenticated%}
 	    <label for="tab-one" id="tab-one-label" class="tab"><i class="iconoir-stat-up"></i>&nbsp;Subscribed Channels</label>
 	    <label for="tab-two" id="tab-two-label" class="tab"><i class="iconoir-globe"></i>&nbsp;Popular Posts</label>
 	    <label for="tab-three" id="tab-three-label" class="tab"><i class="iconoir-home-user"></i>&nbsp;Your stuff</label>
+	    {%else%}
+	    <label for="tab-two" id="tab-two-label" class="tab"><i class="iconoir-globe"></i>&nbsp;Popular Posts</label>
+	    <label for="tab-three" id="tab-three-label" class="tab"><i class="iconoir-home-user"></i>&nbsp;Your stuff</label>
 
+	    {%endif%}
 
       <div id="tab-one-panel" class="panel active">
       <div class="list-container endless_container ">
@@ -117,12 +127,22 @@
 
 	</div>
         <div id="tab-three-panel" class="panel">
-
+		{%if user.authenticated%}
 	<div class="">
 	<a href="#" class="link">Saved</a> | 
 	<a href="#" class="link">History</a> | 
 	<a href=#" class="link">Imported</a>
 	</div>
+	{%else%}
+	<div class="alert alert--info">
+	<i class="fa fa-info-circle fa-2xl icon"></i> 
+	<div class="content">
+		<div class="title">Login to see your saved posts and history!</div>
+	</div>
+</div>
+
+
+	{%endif%}
 <div class="section1">
 <div class="list-container endless_container ">
 		{%for parik in your_pariks%}
@@ -144,6 +164,7 @@
 
              </div >
        
+		{%if your_pariks%}
 	     <div class="pagination">
     <span class="step-links">
         {% if your_pariks.has_previous %}
@@ -162,6 +183,7 @@
     </span>
 
 	     </div>
+	     {%endif%}
 </div>
 
 

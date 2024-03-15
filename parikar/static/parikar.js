@@ -225,7 +225,6 @@ function animation(parik,record_view_url,view_progress){
 	});
 	*/
 
-	/*	
 	$(".line-comment").on("click",function(e) {
 	if ($(this).css('opacity') == 1) {
 		e.stopPropagation()
@@ -261,7 +260,6 @@ function animation(parik,record_view_url,view_progress){
 		}
 		);
 
-	*/
 
 
 }

@@ -28,6 +28,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*',]
 
+USE_DEPRECATED_PYTZ = False
+
 ADMIN = (("ShreeKant ", "skbohra123@gmail.com"),)
 
 # Application definition
@@ -47,7 +49,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    #'django_celery_beat',
+    'django_celery_beat',
     'el_pagination',
 ]
 

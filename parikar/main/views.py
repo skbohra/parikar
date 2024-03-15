@@ -25,32 +25,34 @@ from ai21.models import DocumentType
 DEFAULT_LINE_COLOR = ""
 DEFAULT_LINE_FONT = ""
 
-@login_required
 def index(request):
     template = "index.html"
     subscribed_channels = []
     if request.user.is_authenticated:
         subscribed_channels = ChannelSubscriber.objects.filter(subscriber=request.user,is_active=True).values('channel__owner')
-    print(subscribed_channels)
-    pariks = Parik.objects.filter(user__in=subscribed_channels).order_by('-id')
-    paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+        pariks = Parik.objects.filter(user__in=subscribed_channels).order_by('-id')
+        paginator = Paginator(pariks, 10)  # Show 25 contacts per page.
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
 
+        your_instant_pariks = InstantParik.objects.filter(user=request.user,is_user_saved=False).order_by('-id')
+        your_pariks = Parik.objects.filter(user=request.user).order_by('-id')
+        your_posts  = list(chain(your_instant_pariks, your_pariks))
+
+        paginator = Paginator(your_posts, 10)  # Show 25 contacts per page.
+        page_number = request.GET.get("your")
+        your_obj = paginator.get_page(page_number)
+
+    else:
+        your_obj = []
+        page_obj = []
+    
     hitcounts = HitCount.objects.filter(content_type=ContentType.objects.get_for_model(Parik),hits__gte=2)
     
     popular_pariks = Parik.objects.all().order_by('-id')
     paginator = Paginator(popular_pariks, 10)  # Show 25 contacts per page.
     page_number = request.GET.get("popular")
     popular_obj = paginator.get_page(page_number)
-
-    your_instant_pariks = InstantParik.objects.filter(user=request.user,is_user_saved=False).order_by('-id')
-    your_pariks = Parik.objects.filter(user=request.user).order_by('-id')
-    your_posts  = list(chain(your_instant_pariks, your_pariks))
-
-    paginator = Paginator(your_posts, 10)  # Show 25 contacts per page.
-    page_number = request.GET.get("your")
-    your_obj = paginator.get_page(page_number)
 
 
     context = {'pariks':page_obj,'popular_pariks':popular_obj,'your_pariks':your_obj,'subscribed_channels':subscribed_channels}
