@@ -42,7 +42,7 @@ function animation(parik,record_view_url,view_progress){
 		$.notify("Fast forwarding to where you left","info");
 	}
 
-	TweenLite.defaultEase = Circ.easeInOut;
+	//TweenLite.defaultEase = Circ.easeInOut;
 
 	//animation effect based on the user preference 
 	if (parik == "default"){
@@ -51,7 +51,7 @@ function animation(parik,record_view_url,view_progress){
 			line, time,
 			{
 				opacity: 0,
-				delay:0.9,
+				delay:0,
 				y:y,
 				autoAlpha:0
 			},
@@ -63,7 +63,7 @@ function animation(parik,record_view_url,view_progress){
 		.add ( TweenMax.staggerTo (
 			line, time,
 			{
-				delay: time,
+				delay: 0,
 				opacity: 0,
 				autoAlpha:0,
 				y: -y,
