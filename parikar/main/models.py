@@ -80,7 +80,7 @@ class Channel(models.Model):
         return subscribers
     def create_channel_thumbnail(self):
         image = Image.open(self.thumbnail)
-        image.thumbnail((64,64), Image.ANTIALIAS)
+        image.thumbnail((64,64), Image.LANCZOS)
 
         thumb_name, thumb_extension = os.path.splitext(self.thumbnail.name)
         thumb_extension = thumb_extension.lower()

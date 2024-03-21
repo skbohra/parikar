@@ -35,8 +35,11 @@ display:none;
 	 <div class="video" style="background:{{parik.background}}">
 			    {%for line in lines%}
 			    <div class="line">
-				    <span id="{{line.line_id}}" style="font-family:{{line.font}}; font-size:{{parik.font_size}}em; color:{{line.color}}; font-weight:{{parik.font_weight}}" > {{line.line}}</span>
-					    <br> <a href="#" data-line="{{line.line_id}}"  class="line-comment" id="{{line.line_id}}"><i class="iconoir-chat-bubble"></i> comments</a>
+				    <span id="{{line.line_id}}" style="font-family:{{line.font}}; font-size:{{parik.font_size}}em; color:{{line.color}}; font-weight:{{parik.font_weight}}" >
+					    {%for word in line.words %}
+					    <span class="word">{{word}}</span>
+					    {%endfor%}
+				    </span>
 
 </div>
 {%endfor%}

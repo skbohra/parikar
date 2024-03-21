@@ -24,6 +24,7 @@ function animation(parik,record_view_url,view_progress){
 	//
 	var noSleep = new NoSleep();
 	var line = $('.line');
+	var word = $('.word');
 	var time = 0.9;
 	var y = 100;
 	
@@ -225,45 +226,14 @@ function animation(parik,record_view_url,view_progress){
 	});
 	*/
 
-	$(".line-comment").on("click",function(e) {
-	if ($(this).css('opacity') == 1) {
-		e.stopPropagation()
-		e.preventDefault();
+	$(".video").on("click",function(e) {
 
-		$(".video-control-pause").click();
-		var line_id = $(this).data("line") ;
-		var line  = $("#"+line_id).text();
+	$(".video-control-pause").click();
 
-		$(".popup-data").text(line);
-
-		$(".popup").fadeIn(500);
-
-	}
-		});
-		$(".close").click(function() {
-		  $(".popup").fadeOut(500);
-		$(".video-control-pause").click();
-		});
-
-
-
-		$(".video").click(function(){
-		$(".video-control-pause").click();
-		});
-
-		$(".line-comment").hover(function(){
-		$(".video-control-pause").click();
-		},
-	function(){
-
-		$(".video-control-pause").click();
-		}
-		);
-
+	});
 
 
 }
-
 
 
 

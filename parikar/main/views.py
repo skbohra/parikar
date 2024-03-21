@@ -130,6 +130,7 @@ def single_video(request,id=id,extra_context=None,template="play-video.html"):
     for line in lines:
         data = {}
         data['line'] = line
+        data['words'] = line.split(" ")
         if parik.shuffle_fonts_by_line:
             data['font'] = get_random_font()
         else:
